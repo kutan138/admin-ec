@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+/* ============================
+   LIGHT THEME
+   ============================ */
+:root {
+  /* Neutral */
+  --color-bg: 246 247 248;              /* #f6f7f8 */
+  --color-surface: 255 255 255;         /* table, search, chips */
+  --color-text: 17 24 39;               /* gray-900 */
+  --color-text-secondary: 107 114 128;  /* gray-500 */
+  --color-border: 229 231 235;          /* gray-200 */
+
+  /* Primary */
+  --color-primary: 43 140 238;          /* #2b8cee */
+
+  /* Sidebar */
+  --color-sidebar-bg: 17 26 34;         /* #111a22 */
+  --color-sidebar-hover: 35 54 72;      /* #233648 */
+
+  /* Status */
+  --color-success-bg: 220 252 231;      /* green-100 */
+  --color-success-text: 22 163 74;      /* green-600 */
+
+  --color-warning-bg: 254 240 138;      /* yellow-100 */
+  --color-warning-text: 180 83 9;
+
+  --color-blue-bg: 219 234 254;         /* blue-100 */
+  --color-blue-text: 30 64 175;
+
+  --color-danger-bg: 254 226 226;       /* red-100 */
+  --color-danger-text: 185 28 28;
+}
+
+/* ============================
+   DARK THEME
+   ============================ */
+.dark {
+  --color-bg: 16 25 34;                /* #101922 */
+  --color-surface: 31 41 55;           /* gray-800 */
+  --color-text: 255 255 255;
+  --color-text-secondary: 156 163 175;/* gray-400 */
+  --color-border: 55 65 81;            /* gray-700 */
+
+  --color-primary: 43 140 238;
+
+  --color-sidebar-bg: 17 26 34;
+  --color-sidebar-hover: 35 54 72;
+
+  /* Status dark */
+  --color-success-bg: 20 83 45;
+  --color-success-text: 134 239 172;
+
+  --color-warning-bg: 113 63 18;
+  --color-warning-text: 253 224 71;
+
+  --color-blue-bg: 30 58 138;
+  --color-blue-text: 147 197 253;
+
+  --color-danger-bg: 127 29 29;
+  --color-danger-text: 252 165 165;
+}
