@@ -2,6 +2,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { ThemeProvider } from '@/providers/theme/ThemeProvider';
 import { StyleProvider } from '@ant-design/cssinjs';
 import { routeTree } from './routeTree.gen';
+import { ConfigProvider } from './providers/config/ConfigProvider';
 
 // Create a new router instance
 const router = createRouter({ routeTree })
@@ -17,9 +18,11 @@ const App = () => {
 
     return (
         <StyleProvider layer>
-            <ThemeProvider>
-                <RouterProvider router={router} />
-            </ThemeProvider>
+            <ConfigProvider>
+                <ThemeProvider>
+                    <RouterProvider router={router} />
+                </ThemeProvider>
+            </ConfigProvider>
         </StyleProvider >
     )
 }
