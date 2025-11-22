@@ -1,17 +1,4 @@
-import Footer from '@/components/layout/footer/Footer'
-import Header from '@/components/layout/header/Header'
-import SideBar from '@/components/layout/sidebar/SideBar'
-import { createRootRoute, Outlet } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import MainLayout from '@/components/layout/MainLayout';
+import { createRootRoute } from '@tanstack/react-router';
 
-const RootLayout = () => (
-    <>
-        <Header />
-        <SideBar />
-        <Outlet />
-        <Footer />
-        <TanStackRouterDevtools />
-    </>
-)
-
-export const Route = createRootRoute({ component: RootLayout })
+export const Route = createRootRoute({ component: MainLayout })
