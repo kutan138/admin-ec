@@ -1,7 +1,7 @@
 import BaseHeading from "@/components/ui/heading/BaseHeading";
-import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import type { TreeDataNode } from 'antd';
-import { Button, Form, Input, Radio, Switch, Tree, TreeSelect, type GetProps } from "antd";
+import { Button, Flex, Form, Input, Radio, Space, Switch, Tree, TreeSelect, type GetProps } from "antd";
 
 type DirectoryTreeProps = GetProps<typeof Tree.DirectoryTree>;
 
@@ -129,9 +129,15 @@ const CategoryPage = () => {
                         <Form.Item label="Trạng thái hiển thị">
                             <Switch />
                         </Form.Item>
-                        <Form.Item>
-                            <Button type="primary">Submit</Button>
-                        </Form.Item>
+                        <Flex justify="space-between">
+                            <Form.Item>
+                                <Button type="primary" size="large">Lưu</Button>
+                            </Form.Item>
+                            <Form.Item>
+                                <Button type="primary" size="large" danger icon={<DeleteOutlined />}>Xoá</Button>
+                            </Form.Item>
+                        </Flex>
+
                     </Form>
                 </div>
             </div>
