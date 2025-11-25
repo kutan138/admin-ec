@@ -15,6 +15,8 @@ import { Route as OrderRouteImport } from './routes/order'
 import { Route as CustomerRouteImport } from './routes/customer'
 import { Route as CategoryRouteImport } from './routes/category'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CategoryIndexRouteImport } from './routes/category/index'
+import { Route as CategoryAddRouteImport } from './routes/category/add'
 
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
@@ -46,31 +48,46 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategoryIndexRoute = CategoryIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CategoryRoute,
+} as any)
+const CategoryAddRoute = CategoryAddRouteImport.update({
+  id: '/add',
+  path: '/add',
+  getParentRoute: () => CategoryRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/category': typeof CategoryRoute
+  '/category': typeof CategoryRouteWithChildren
   '/customer': typeof CustomerRoute
   '/order': typeof OrderRoute
   '/product': typeof ProductRoute
   '/profile': typeof ProfileRoute
+  '/category/add': typeof CategoryAddRoute
+  '/category/': typeof CategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/category': typeof CategoryRoute
   '/customer': typeof CustomerRoute
   '/order': typeof OrderRoute
   '/product': typeof ProductRoute
   '/profile': typeof ProfileRoute
+  '/category/add': typeof CategoryAddRoute
+  '/category': typeof CategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/category': typeof CategoryRoute
+  '/category': typeof CategoryRouteWithChildren
   '/customer': typeof CustomerRoute
   '/order': typeof OrderRoute
   '/product': typeof ProductRoute
   '/profile': typeof ProfileRoute
+  '/category/add': typeof CategoryAddRoute
+  '/category/': typeof CategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,8 +98,17 @@ export interface FileRouteTypes {
     | '/order'
     | '/product'
     | '/profile'
+    | '/category/add'
+    | '/category/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/category' | '/customer' | '/order' | '/product' | '/profile'
+  to:
+    | '/'
+    | '/customer'
+    | '/order'
+    | '/product'
+    | '/profile'
+    | '/category/add'
+    | '/category'
   id:
     | '__root__'
     | '/'
@@ -91,11 +117,13 @@ export interface FileRouteTypes {
     | '/order'
     | '/product'
     | '/profile'
+    | '/category/add'
+    | '/category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CategoryRoute: typeof CategoryRoute
+  CategoryRoute: typeof CategoryRouteWithChildren
   CustomerRoute: typeof CustomerRoute
   OrderRoute: typeof OrderRoute
   ProductRoute: typeof ProductRoute
@@ -146,12 +174,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/category/': {
+      id: '/category/'
+      path: '/'
+      fullPath: '/category/'
+      preLoaderRoute: typeof CategoryIndexRouteImport
+      parentRoute: typeof CategoryRoute
+    }
+    '/category/add': {
+      id: '/category/add'
+      path: '/add'
+      fullPath: '/category/add'
+      preLoaderRoute: typeof CategoryAddRouteImport
+      parentRoute: typeof CategoryRoute
+    }
   }
 }
 
+interface CategoryRouteChildren {
+  CategoryAddRoute: typeof CategoryAddRoute
+  CategoryIndexRoute: typeof CategoryIndexRoute
+}
+
+const CategoryRouteChildren: CategoryRouteChildren = {
+  CategoryAddRoute: CategoryAddRoute,
+  CategoryIndexRoute: CategoryIndexRoute,
+}
+
+const CategoryRouteWithChildren = CategoryRoute._addFileChildren(
+  CategoryRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CategoryRoute: CategoryRoute,
+  CategoryRoute: CategoryRouteWithChildren,
   CustomerRoute: CustomerRoute,
   OrderRoute: OrderRoute,
   ProductRoute: ProductRoute,
