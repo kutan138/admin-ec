@@ -16,6 +16,8 @@
     "@tanstack/react-router": "^1.139.1",
     "@tanstack/react-router-devtools": "^1.139.1",
     "antd": "^6.0.0",
+    "axios": "^1.13.2",
+    "axios-mock-adapter": "^2.1.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.17"
