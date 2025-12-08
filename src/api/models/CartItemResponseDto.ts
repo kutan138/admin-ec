@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Product } from './Product';
+import type { ProductResponseDto } from './ProductResponseDto';
 export type CartItemResponseDto = {
     /**
      * Cart item unique identifier
@@ -23,6 +23,6 @@ export type CartItemResponseDto = {
     /**
      * Product details
      */
-    product?: Product;
+    product?: ProductResponseDto;
 };
 

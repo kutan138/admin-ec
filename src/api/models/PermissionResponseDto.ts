@@ -2,7 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type CreatePermissionDto = {
+export type PermissionResponseDto = {
+    /**
+     * Permission unique identifier
+     */
+    id: string;
     /**
      * Permission name
      */
@@ -11,5 +15,13 @@ export type CreatePermissionDto = {
      * Permission description
      */
     description?: string;
+    /**
+     * Permission creation date
+     */
+    createdAt: string;
+    /**
+     * Permission last update date
+     */
+    updatedAt: string;
 };
 

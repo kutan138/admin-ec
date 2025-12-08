@@ -2,15 +2,18 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Permission } from './Permission';
 export type CreateRoleDto = {
     /**
      * Role name
      */
     name: string;
     /**
-     * List of permissions for the role
+     * Role description
      */
-    permissions?: Array<Permission>;
+    description?: string;
+    /**
+     * List of permission IDs for the role
+     */
+    permissions?: Array<string>;
 };
 
