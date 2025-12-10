@@ -1,7 +1,5 @@
 import BaseHeading from "@/components/ui/heading/BaseHeading";
 import { PlusOutlined } from "@ant-design/icons";
-import { useRouter } from "@tanstack/react-router";
-import type { TreeDataNode } from "antd";
 import {
   Button,
   Flex,
@@ -10,90 +8,14 @@ import {
   Switch,
   Tree,
   TreeSelect,
-  type GetProps,
 } from "antd";
-import { Route as CategoryAddRoute } from "@/routes/category/add";
-
-type DirectoryTreeProps = GetProps<typeof Tree.DirectoryTree>;
-
+import { useCategoryTree } from "./hooks/useCategoryTree";
 const { Search } = Input;
-type SearchProps = GetProps<typeof Input.Search>;
-
-const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
-  console.log(info?.source, value);
 const { DirectoryTree } = Tree;
 
 const CategoryPage = () => {
   const [form] = Form.useForm();
-  const router = useRouter();
-
-  const categories: TreeDataNode[] = [
-    {
-      key: "1",
-      title: "Thời trang Nữ",
-      children: [
-        {
-          key: "1-1",
-          title: "Áo nữ",
-        },
-        {
-          key: "1-2",
-          title: "Quần nữ",
-        },
-      ],
-    },
-    {
-      key: "2",
-      title: "Thời trang Nam",
-      children: [
-        {
-          key: "2-1",
-          title: "Áo nam",
-        },
-        {
-          key: "2-2",
-          title: "Quần nam",
-        },
-      ],
-    },
-    {
-      key: "3",
-      title: "Phụ kiện",
-      children: [
-        {
-          key: "3-1",
-          title: "Phụ kiện 1",
-        },
-        {
-          key: "3-2",
-          title: "Phụ kiện 2",
-        },
-      ],
-    },
-    {
-      key: "4",
-      title: "Giày dép",
-      icon: false,
-      children: [
-        {
-          key: "4-1",
-          title: "Giày dép 1",
-        },
-        {
-          key: "4-2",
-          title: "Giày dép 2",
-        },
-      ],
-    },
-  ];
-
-  const onSelect: DirectoryTreeProps["onSelect"] = (keys, info) => {
-    console.log("Trigger Select", keys, info);
-  };
-
-  const onAddCategory = () => {
-    router.navigate({ to: CategoryAddRoute.id });
-  };
+  const { categories, onSelect, onAddCategory, onSearch } = useCategoryTree();
 
   return (
     <div className="flex flex-col gap-4">

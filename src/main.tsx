@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './api/config'; // Cấu hình OpenAPI Base URL
 
 // Render the app
 const rootElement = document.getElementById('root')!

@@ -1,9 +1,49 @@
 import { Form, Input, Select, Switch, Button, Divider } from "antd";
 
-export default function CategoryForm() {
+type CategoryFormValues = {
+  name?: string;
+  slug?: string;
+  parent?: string;
+  description?: string;
+  isActive?: boolean;
+};
+
+type Option = { label: string; value: string };
+
+type CategoryFormProps = {
+  initialValues?: CategoryFormValues;
+  parentOptions?: Option[];
+  onSubmit?: (values: CategoryFormValues) => void;
+  onCancel?: () => void;
+  submitText?: string;
+  cancelText?: string;
+  loading?: boolean;
+};
+
+const defaultParentOptions: Option[] = [
+  { value: "none", label: "-- Không có --" },
+  { value: "thoi-trang-nu", label: "Thời trang Nữ" },
+  { value: "thoi-trang-nam", label: "Thời trang Nam" },
+  { value: "phu-kien", label: "Phụ kiện" },
+  { value: "giay-dep", label: "Giày dép" },
+];
+
+export default function CategoryForm({
+  initialValues,
+  parentOptions = defaultParentOptions,
+  onSubmit,
+  onCancel,
+  submitText = "Lưu",
+  cancelText = "Hủy",
+  loading = false,
+}: CategoryFormProps) {
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-200">
-      <Form layout="vertical">
+      <Form
+        layout="vertical"
+        initialValues={{ isActive: true, parent: "none", ...initialValues }}
+        onFinish={onSubmit}
+      >
         <Form.Item label="Tên danh mục" name="name">
           <Input placeholder="Ví dụ: Thời trang Nam" />
         </Form.Item>
@@ -16,13 +56,13 @@ export default function CategoryForm() {
           <Input placeholder="Ví dụ: thoi-trang-nam" />
         </Form.Item>
 
-        <Form.Item label="Danh mục cha" name="parent" initialValue="none">
+        <Form.Item label="Danh mục cha" name="parent">
           <Select>
-            <Select.Option value="none">-- Không có --</Select.Option>
-            <Select.Option value="thoi-trang-nu">Thời trang Nữ</Select.Option>
-            <Select.Option value="thoi-trang-nam">Thời trang Nam</Select.Option>
-            <Select.Option value="phu-kien">Phụ kiện</Select.Option>
-            <Select.Option value="giay-dep">Giày dép</Select.Option>
+            {parentOptions.map((opt) => (
+              <Select.Option key={opt.value} value={opt.value}>
+                {opt.label}
+              </Select.Option>
+            ))}
           </Select>
         </Form.Item>
 
@@ -45,9 +85,9 @@ export default function CategoryForm() {
 
         <Form.Item>
           <div style={{ display: "flex", justifyContent: "end", gap: 12 }}>
-            <Button>Hủy</Button>
-            <Button type="primary" htmlType="submit">
-              Lưu
+            <Button onClick={onCancel}>{cancelText}</Button>
+            <Button type="primary" htmlType="submit" loading={loading}>
+              {submitText}
             </Button>
           </div>
         </Form.Item>
