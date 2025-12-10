@@ -1,6 +1,6 @@
 import SideBar from '@/components/layout/SideBar';
 import UserInfo from '@/components/layout/UserInfo';
-import { Outlet } from '@tanstack/react-router';
+import { Outlet, useRouterState } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { Layout } from 'antd';
 import type { FC } from 'react';
@@ -11,6 +11,16 @@ type Props = {
 const { Content, Footer, Sider } = Layout;
 
 const MainLayout: FC<Props> = ({ hasSider = true }) => {
+    const { location } = useRouterState({
+        select: (state) => ({ location: state.location }),
+    });
+
+    const shouldHideLayout = ['/login'].includes(location.pathname);
+
+    if (shouldHideLayout) {
+        return <Outlet />;
+    }
+
     return (
         <>
             <Layout hasSider={hasSider}>

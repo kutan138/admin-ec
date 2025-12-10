@@ -3,6 +3,7 @@ import { ThemeProvider } from '@/providers/theme/ThemeProvider';
 import { StyleProvider } from '@ant-design/cssinjs';
 import { routeTree } from './routeTree.gen';
 import { ConfigProvider } from './providers/config/ConfigProvider';
+import { AuthProvider } from './providers/auth/AuthProvider';
 
 // Create a new router instance
 const router = createRouter({ routeTree })
@@ -20,7 +21,9 @@ const App = () => {
         <StyleProvider layer>
             <ConfigProvider>
                 <ThemeProvider>
-                    <RouterProvider router={router} />
+                    <AuthProvider>
+                        <RouterProvider router={router} />
+                    </AuthProvider>
                 </ThemeProvider>
             </ConfigProvider>
         </StyleProvider >
