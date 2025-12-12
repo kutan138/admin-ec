@@ -1,7 +1,7 @@
-import { useAuth } from '@/hooks/useAuth';
-import { useRouterState, useNavigate } from '@tanstack/react-router';
-import { Alert, Button, Card, Form, Input, Typography } from 'antd';
-import { useState } from 'react';
+import { useAuth } from "@/hooks/useAuth";
+import { useRouterState, useNavigate } from "@tanstack/react-router";
+import { Alert, Button, Card, Form, Input, Typography } from "antd";
+import { useState } from "react";
 
 type LoginFormValues = {
   email: string;
@@ -15,16 +15,17 @@ const LoginPage = () => {
   const [error, setError] = useState<string | null>(null);
 
   const redirectTo =
-    (location.search as Record<string, string> | undefined)?.redirect ?? '/';
+    (location.search as Record<string, string> | undefined)?.redirect ?? "/";
 
   const handleSubmit = async (values: LoginFormValues) => {
     setError(null);
     try {
       await login(values);
       navigate({ to: redirectTo, replace: true });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       const message =
-        err?.body?.message || err?.message || 'Đăng nhập không thành công.';
+        err?.body?.message || err?.message || "Đăng nhập không thành công.";
       setError(message);
     }
   };
@@ -38,14 +39,14 @@ const LoginPage = () => {
         <Form
           layout="vertical"
           onFinish={handleSubmit}
-          initialValues={{ email: '', password: '' }}
+          initialValues={{ email: "", password: "" }}
         >
           <Form.Item
             label="Email"
             name="email"
             rules={[
-              { required: true, message: 'Vui lòng nhập email' },
-              { type: 'email', message: 'Email không hợp lệ' },
+              { required: true, message: "Vui lòng nhập email" },
+              { type: "email", message: "Email không hợp lệ" },
             ]}
           >
             <Input placeholder="you@example.com" autoComplete="email" />
@@ -54,26 +55,19 @@ const LoginPage = () => {
           <Form.Item
             label="Mật khẩu"
             name="password"
-            rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}
+            rules={[{ required: true, message: "Vui lòng nhập mật khẩu" }]}
           >
-            <Input.Password placeholder="••••••••" autoComplete="current-password" />
+            <Input.Password
+              placeholder="••••••••"
+              autoComplete="current-password"
+            />
           </Form.Item>
 
           {error ? (
-            <Alert
-              type="error"
-              showIcon
-              className="mb-3"
-              message={error}
-            />
+            <Alert type="error" showIcon className="mb-3" message={error} />
           ) : null}
 
-          <Button
-            block
-            type="primary"
-            htmlType="submit"
-            loading={isLoading}
-          >
+          <Button block type="primary" htmlType="submit" loading={isLoading}>
             Đăng nhập
           </Button>
         </Form>

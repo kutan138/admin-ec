@@ -1,7 +1,7 @@
-import { useAuth } from '@/hooks/useAuth';
-import { Navigate, useRouterState } from '@tanstack/react-router';
-import { Spin } from 'antd';
-import type { PropsWithChildren, ReactNode } from 'react';
+import { useAuth } from "@/hooks/useAuth";
+import { Navigate, useRouterState } from "@tanstack/react-router";
+import { Spin } from "antd";
+import type { PropsWithChildren, ReactNode } from "react";
 
 type Props = PropsWithChildren<{
   fallback?: ReactNode;
@@ -24,13 +24,7 @@ export const PrivateRoute = ({ children, fallback }: Props) => {
   }
 
   if (!isAuthenticated) {
-    return (
-      <Navigate
-        to="/login"
-        search={{ redirect: redirectTo }}
-        replace
-      />
-    );
+    return <Navigate to="/login" search={{ redirect: redirectTo }} replace />;
   }
 
   return <>{children}</>;

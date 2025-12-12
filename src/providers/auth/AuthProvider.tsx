@@ -1,44 +1,23 @@
-import { AuthService } from '@/api/services/AuthService';
-import { UsersService } from '@/api/services/UsersService';
-import { OpenAPI } from '@/api/core/OpenAPI';
-import type { LoginDto } from '@/api/models/LoginDto';
-import type { TokenResponseDto } from '@/api/models/TokenResponseDto';
-import type { UserResponseDto } from '@/api/models/UserResponseDto';
-import type { PropsWithChildren } from 'react';
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-
-type AuthContextValue = {
-  user: UserResponseDto | null;
-  roles: string[];
-  permissions: string[];
-  accessToken: string | null;
-  refreshToken: string | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  login: (payload: LoginDto) => Promise<void>;
-  logout: () => void;
-  hasPermission: (permission: string) => boolean;
-  hasRole: (role: string) => boolean;
-};
+import { AuthService } from "@/api/generated/services/AuthService";
+import { UsersService } from "@/api/generated/services/UsersService";
+import { OpenAPI } from "@/api/generated/core/OpenAPI";
+import type { LoginDto } from "@/api/generated/models/LoginDto";
+import type { TokenResponseDto } from "@/api/generated/models/TokenResponseDto";
+import type { UserResponseDto } from "@/api/generated/models/UserResponseDto";
+import type { PropsWithChildren } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { AuthContext, type AuthContextValue } from "./AuthContext";
 
 const STORAGE_KEYS = {
-  accessToken: 'auth.accessToken',
-  refreshToken: 'auth.refreshToken',
+  accessToken: "auth.accessToken",
+  refreshToken: "auth.refreshToken",
 };
-
-const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 const setOpenApiToken = (token: string | null) => {
-  OpenAPI.TOKEN = token ? () => token : undefined;
+  OpenAPI.TOKEN = token ?? undefined;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const extractAuthMeta = (profile: any) => {
   const permissions: string[] = Array.isArray(profile?.permissions)
     ? profile.permissions
@@ -81,7 +60,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       setPermissions(perms);
       setRoles(profRoles);
     } catch (error) {
-      console.error('Failed to load profile', error);
+      console.error("Failed to load profile", error);
       clearTokens();
     } finally {
       setIsLoading(false);
@@ -99,7 +78,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         setIsLoading(false);
       }
     },
-    [loadProfile],
+    [loadProfile]
   );
 
   const logout = useCallback(() => {
@@ -124,7 +103,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const hasPermission = useCallback(
     (permission: string) => permissions.includes(permission),
-    [permissions],
+    [permissions]
   );
   const hasRole = useCallback((role: string) => roles.includes(role), [roles]);
 
@@ -154,16 +133,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       logout,
       hasPermission,
       hasRole,
-    ],
+    ]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
-
-export const useAuthContext = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) {
-    throw new Error('useAuthContext must be used within AuthProvider');
-  }
-  return ctx as AuthContextValue;
-};
+export default AuthProvider;

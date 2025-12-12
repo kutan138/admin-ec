@@ -1,6 +1,6 @@
-import type { Category } from "@/api/models/Category";
-import { CategoriesService } from "@/api/services/CategoriesService";
-import { Route as CategoryAddRoute } from "@/routes/category/add";
+import type { CategoryResponseDto } from "@/api/generated";
+import { CategoriesService } from "@/api/generated/services/CategoriesService";
+import { Route as CategoryAddRoute } from "@/routes/category.add";
 import type { Key } from "@rc-component/tree/lib/interface";
 import { useRouter } from "@tanstack/react-router";
 import type { GetProps, Input } from "antd";
@@ -13,7 +13,7 @@ type SearchProps = GetProps<typeof Input.Search>;
 // Encapsulates tree data and handlers so the page stays presentational.
 export const useCategoryTree = () => {
   const router = useRouter();
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<CategoryResponseDto[]>([]);
 
   const onSelect: DirectoryTreeProps["onSelect"] = useCallback(
     (keys: Key[]) => {

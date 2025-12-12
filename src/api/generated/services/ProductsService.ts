@@ -4,8 +4,9 @@
 /* eslint-disable */
 import type { CreateProductDto } from '../models/CreateProductDto';
 import type { CreateProductImageDto } from '../models/CreateProductImageDto';
-import type { Product } from '../models/Product';
-import type { ProductImage } from '../models/ProductImage';
+import type { MessageResponseDto } from '../models/MessageResponseDto';
+import type { ProductImageResponseDto } from '../models/ProductImageResponseDto';
+import type { ProductResponseDto } from '../models/ProductResponseDto';
 import type { UpdateProductDto } from '../models/UpdateProductDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -14,12 +15,12 @@ export class ProductsService {
     /**
      * Create a new product
      * @param requestBody
-     * @returns Product Product created successfully
+     * @returns ProductResponseDto Product created successfully
      * @throws ApiError
      */
     public static productsControllerCreate(
         requestBody: CreateProductDto,
-    ): CancelablePromise<Product> {
+    ): CancelablePromise<ProductResponseDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/products',
@@ -29,10 +30,10 @@ export class ProductsService {
     }
     /**
      * Get all products
-     * @returns Product List of all products
+     * @returns ProductResponseDto List of all products
      * @throws ApiError
      */
-    public static productsControllerFindAll(): CancelablePromise<Array<Product>> {
+    public static productsControllerFindAll(): CancelablePromise<Array<ProductResponseDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/products',
@@ -41,12 +42,12 @@ export class ProductsService {
     /**
      * Get a product by ID
      * @param id
-     * @returns Product Product found
+     * @returns ProductResponseDto Product found
      * @throws ApiError
      */
     public static productsControllerFindOne(
         id: string,
-    ): CancelablePromise<Product> {
+    ): CancelablePromise<ProductResponseDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/products/{id}',
@@ -62,13 +63,13 @@ export class ProductsService {
      * Update a product
      * @param id
      * @param requestBody
-     * @returns Product Product updated successfully
+     * @returns ProductResponseDto Product updated successfully
      * @throws ApiError
      */
     public static productsControllerUpdate(
         id: string,
         requestBody: UpdateProductDto,
-    ): CancelablePromise<Product> {
+    ): CancelablePromise<ProductResponseDto> {
         return __request(OpenAPI, {
             method: 'PATCH',
             url: '/products/{id}',
@@ -85,12 +86,12 @@ export class ProductsService {
     /**
      * Delete a product
      * @param id
-     * @returns any Product deleted successfully
+     * @returns MessageResponseDto Product deleted successfully
      * @throws ApiError
      */
     public static productsControllerRemove(
         id: string,
-    ): CancelablePromise<any> {
+    ): CancelablePromise<MessageResponseDto> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/products/{id}',
@@ -105,12 +106,12 @@ export class ProductsService {
     /**
      * Add an image to a product
      * @param requestBody
-     * @returns ProductImage Image added successfully
+     * @returns ProductImageResponseDto Image added successfully
      * @throws ApiError
      */
     public static productsControllerAddImage(
         requestBody: CreateProductImageDto,
-    ): CancelablePromise<ProductImage> {
+    ): CancelablePromise<ProductImageResponseDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/products/images',
@@ -121,12 +122,12 @@ export class ProductsService {
     /**
      * Remove an image from a product
      * @param id
-     * @returns any Image removed successfully
+     * @returns MessageResponseDto Image removed successfully
      * @throws ApiError
      */
     public static productsControllerRemoveImage(
         id: string,
-    ): CancelablePromise<any> {
+    ): CancelablePromise<MessageResponseDto> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/products/images/{id}',

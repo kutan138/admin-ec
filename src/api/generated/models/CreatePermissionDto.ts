@@ -3,5 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 export type CreatePermissionDto = {
+    /**
+     * Permission name
+     */
+    name: string;
+    /**
+     * Permission description
+     */
+    description?: string;
 };
 

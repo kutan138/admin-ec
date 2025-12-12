@@ -8,6 +8,7 @@ import {
   Switch,
   Tree,
   TreeSelect,
+  type TreeDataNode,
 } from "antd";
 import { useCategoryTree } from "./hooks/useCategoryTree";
 const { Search } = Input;
@@ -16,6 +17,10 @@ const { DirectoryTree } = Tree;
 const CategoryPage = () => {
   const [form] = Form.useForm();
   const { categories, onSelect, onAddCategory, onSearch } = useCategoryTree();
+  const categorytreeData: TreeDataNode[] = categories.map((category) => ({
+    title: category.name,
+    key: category.id,
+  }));
 
   return (
     <div className="flex flex-col gap-4">
@@ -53,7 +58,7 @@ const CategoryPage = () => {
               defaultExpandAll
               className="text-md"
               onSelect={onSelect}
-              treeData={categories}
+              treeData={categorytreeData}
             />
           </div>
         </div>
