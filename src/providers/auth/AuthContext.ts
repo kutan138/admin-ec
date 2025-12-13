@@ -1,5 +1,4 @@
-import type { LoginDto } from "@/api/generated/models/LoginDto";
-import type { UserResponseDto } from "@/api/generated/models/UserResponseDto";
+import type { LoginDto, UserResponseDto } from "@/api/generated";
 import { createContext, useContext } from "react";
 
 export type AuthContextValue = {

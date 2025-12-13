@@ -13,6 +13,18 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./models";
+
+/**
+ * 
+ * @export
+ * @interface MessageResponseDto
+ */
+export interface MessageResponseDto {
+    /**
+     * Response message
+     * @type {string}
+     * @memberof MessageResponseDto
+     */
+    'message': string;
+}
+

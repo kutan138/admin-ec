@@ -13,6 +13,18 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./models";
+
+/**
+ * 
+ * @export
+ * @interface TokenResponseDto
+ */
+export interface TokenResponseDto {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TokenResponseDto
+     */
+    'success': boolean;
+}
+

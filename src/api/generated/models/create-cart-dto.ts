@@ -13,6 +13,18 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./models";
+
+/**
+ * 
+ * @export
+ * @interface CreateCartDto
+ */
+export interface CreateCartDto {
+    /**
+     * User unique identifier
+     * @type {string}
+     * @memberof CreateCartDto
+     */
+    'userId': string;
+}
+

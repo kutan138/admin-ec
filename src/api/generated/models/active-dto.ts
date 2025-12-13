@@ -13,6 +13,18 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./models";
+
+/**
+ * 
+ * @export
+ * @interface ActiveDto
+ */
+export interface ActiveDto {
+    /**
+     * Email verification token
+     * @type {string}
+     * @memberof ActiveDto
+     */
+    'token': string;
+}
+

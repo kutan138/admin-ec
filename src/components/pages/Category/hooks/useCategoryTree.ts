@@ -1,5 +1,5 @@
+import { apiClient } from "@/api/api-client";
 import type { CategoryResponseDto } from "@/api/generated";
-import { CategoriesService } from "@/api/generated/services/CategoriesService";
 import { Route as CategoryAddRoute } from "@/routes/category.add";
 import type { Key } from "@rc-component/tree/lib/interface";
 import { useRouter } from "@tanstack/react-router";
@@ -44,8 +44,8 @@ export const useCategoryTree = () => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await CategoriesService.categoriesControllerFindAll();
-      setCategories(response);
+      const response = await apiClient.categories.categoriesControllerFindAll();
+      setCategories(response.data);
     };
     fetchCategories();
   }, []);

@@ -13,6 +13,18 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./models";
+
+/**
+ * 
+ * @export
+ * @interface UpdateCartItemQuantityDto
+ */
+export interface UpdateCartItemQuantityDto {
+    /**
+     * New quantity for the cart item
+     * @type {number}
+     * @memberof UpdateCartItemQuantityDto
+     */
+    'quantity': number;
+}
+

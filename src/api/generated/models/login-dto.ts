@@ -13,6 +13,24 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./models";
+
+/**
+ * 
+ * @export
+ * @interface LoginDto
+ */
+export interface LoginDto {
+    /**
+     * User email address
+     * @type {string}
+     * @memberof LoginDto
+     */
+    'email': string;
+    /**
+     * User password
+     * @type {string}
+     * @memberof LoginDto
+     */
+    'password': string;
+}
+

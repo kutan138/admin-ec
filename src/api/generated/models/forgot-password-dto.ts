@@ -13,6 +13,18 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./models";
+
+/**
+ * 
+ * @export
+ * @interface ForgotPasswordDto
+ */
+export interface ForgotPasswordDto {
+    /**
+     * Email address to send password reset link
+     * @type {string}
+     * @memberof ForgotPasswordDto
+     */
+    'email': string;
+}
+
