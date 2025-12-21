@@ -43,7 +43,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       setIsLoading(true);
       const profile = await usersApi.usersControllerGetProfile();
       const { permissions: perms, roles: profRoles } = extractAuthMeta(profile.data);
-      // setUser(profile);
       setPermissions(perms);
       setRoles(profRoles);
     } catch (error) {
@@ -78,7 +77,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     setPermissions([]);
     setRoles([]);
     cookieManager.clearTokens();
-    setIsAuthenticated(false);
   }, []);
 
   const hasPermission = useCallback(
