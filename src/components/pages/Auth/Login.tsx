@@ -39,7 +39,7 @@ const LoginPage = () => {
         <Form
           layout="vertical"
           onFinish={handleSubmit}
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ email: "letutan500@gmail.com", password: "1" }}
         >
           <Form.Item
             label="Email"

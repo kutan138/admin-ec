@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate:api": "openapi-generator-cli generate",
-    "update:api": "npm run generate:api && echo 'API client updated!'"
+    "generate:api": "openapi-generator-cli generate"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
@@ -17,6 +16,7 @@
     "@tanstack/react-router": "^1.139.1",
     "antd": "^6.0.0",
     "axios": "^1.13.2",
+    "js-cookie": "^3.0.5",
     "react": "^19.2.0",
     "react-dnd": "^16.0.1",
     "react-dom": "^19.2.0",
@@ -30,6 +30,7 @@
     "@tanstack/react-router-devtools": "^1.141.2",
     "@tanstack/router-cli": "^1.139.1",
     "@tanstack/router-plugin": "^1.139.1",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",

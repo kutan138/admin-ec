@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { cookieManager } from "@/utils/cookies";
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
+import { authApi } from "./api-client";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
 
 export const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -10,16 +13,28 @@ export const axiosInstance = axios.create({
   },
 });
 
+// Request Interceptor - Thêm Bearer token từ cookies
+axiosInstance.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    const token = cookieManager.getAccessToken();
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error: AxiosError) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response Interceptor - Xử lý refresh token
 let isRefreshing = false;
 let failedQueue: Array<{
-  resolve: (value?: any) => void;
+  resolve: (value?: unknown) => void;
   reject: (reason?: any) => void;
 }> = [];
 
-const processQueue = (
-  error: AxiosError | null = null,
-  token: string | null = null
-) => {
+const processQueue = (error: any, token: string | null = null) => {
   failedQueue.forEach((prom) => {
     if (error) {
       prom.reject(error);
@@ -29,18 +44,6 @@ const processQueue = (
   });
   failedQueue = [];
 };
-
-// Request interceptor
-axiosInstance.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem("access_token");
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
 
 // Response interceptor
 axiosInstance.interceptors.response.use(
@@ -67,35 +70,29 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
-      const refreshToken = localStorage.getItem("refresh_token");
+      const refreshToken = cookieManager.getRefreshToken();
 
       if (!refreshToken) {
-        localStorage.clear();
+        cookieManager.clearTokens();
         window.location.href = "/login";
         return Promise.reject(error);
       }
 
       try {
-        const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {
-          refreshToken,
-        });
-
-        const { accessToken, refreshToken: newRefreshToken } = response.data;
-
-        localStorage.setItem("access_token", accessToken);
-        if (newRefreshToken) {
-          localStorage.setItem("refresh_token", newRefreshToken);
-        }
-
-        processQueue(null, accessToken);
+        const response = await authApi.authControllerRefresh();
+        const { accessToken, refreshToken } = response.data;
+        cookieManager.setAccessToken(accessToken);
+        cookieManager.setRefreshToken(refreshToken);
 
         if (originalRequest.headers) {
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         }
+
+        processQueue(null, accessToken);
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        processQueue(refreshError as AxiosError, null);
-        localStorage.clear();
+        processQueue(refreshError, null);
+        cookieManager.clearTokens();
         window.location.href = "/login";
         return Promise.reject(refreshError);
       } finally {

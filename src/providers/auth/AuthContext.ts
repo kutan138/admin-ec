@@ -5,8 +5,6 @@ export type AuthContextValue = {
   user: UserResponseDto | null;
   roles: string[];
   permissions: string[];
-  accessToken: string | null;
-  refreshToken: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (payload: LoginDto) => Promise<void>;
@@ -15,9 +13,17 @@ export type AuthContextValue = {
   hasRole: (role: string) => boolean;
 };
 
-export const AuthContext = createContext<AuthContextValue | undefined>(
-  undefined
-);
+export const AuthContext = createContext<AuthContextValue | undefined>({
+  user: null,
+  roles: [],
+  permissions: [],
+  isAuthenticated: false,
+  isLoading: false,
+  login: async () => {},
+  logout: () => {},
+  hasPermission: () => false,
+  hasRole: () => false,
+});
 
 export const useAuthContext = () => {
   const ctx = useContext(AuthContext);

@@ -21,10 +21,16 @@
  */
 export interface TokenResponseDto {
     /**
-     * 
-     * @type {boolean}
+     * JWT access token
+     * @type {string}
      * @memberof TokenResponseDto
      */
-    'success': boolean;
+    'accessToken': string;
+    /**
+     * JWT refresh token
+     * @type {string}
+     * @memberof TokenResponseDto
+     */
+    'refreshToken': string;
 }
 
