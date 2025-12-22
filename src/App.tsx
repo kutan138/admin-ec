@@ -1,9 +1,9 @@
-import { RouterProvider, createRouter } from '@tanstack/react-router';
-import { ThemeProvider } from '@/providers/theme/ThemeProvider';
+import { AuthProvider } from '@/providers/AuthProvider';
+import { ConfigProvider } from '@/providers/ConfigProvider';
+import { ThemeProvider } from '@/providers/ThemeProvider';
 import { StyleProvider } from '@ant-design/cssinjs';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
-import { ConfigProvider } from './providers/config/ConfigProvider';
-import { AuthProvider } from './providers/auth/AuthProvider';
 
 // Create a new router instance
 const router = createRouter({ routeTree })

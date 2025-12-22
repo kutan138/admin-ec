@@ -1,24 +1,25 @@
 import {
   AppstoreOutlined,
   DashboardOutlined,
+  FileProtectOutlined,
   ShoppingCartOutlined,
   TagsOutlined,
   UserAddOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
-import { useRouter, useRouterState } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 import { Route as DashboardRoute } from "@/routes";
 import { Route as OrdersRoute } from "@/routes/order";
 import { Route as ProductsRoute } from "@/routes/product";
 import { Route as CustomersRoute } from "@/routes/customer";
 import { Route as ProfileRoute } from "@/routes/profile";
 import { Route as CategoryRoute } from "@/routes/category";
+import { Route as RoleRoute } from "@/routes/role";
+import { useActiveMenu } from "@/hooks/useActiveMenu";
 
 const SideBar = () => {
   const router = useRouter();
-  const { location } = useRouterState();
-  const currentPath = location.pathname;
 
   const items = [
     {
@@ -51,27 +52,19 @@ const SideBar = () => {
       icon: <UserAddOutlined />,
       label: "User Profile",
     },
+    {
+      key: RoleRoute.id,
+      icon: <FileProtectOutlined />,
+      label: "Role",
+    },
   ];
 
-    const getSelectedKey = () => {
-    // Thử tìm exact match trước
-    const exactMatch = items.find(item => currentPath === item.key);
-    if (exactMatch) return exactMatch.key;
-
-    // Nếu không có exact match, tìm item nào có path là prefix của currentPath
-    const prefixMatch = items.find(item => {
-      // Đảm bảo không match với root path "/"
-      if (item.key === "/" && currentPath !== "/") return false;
-      return currentPath.startsWith(item.key);
-    });
-    
-    return prefixMatch ? prefixMatch.key : currentPath;
-  };
+  const selectedKeys = useActiveMenu(items);
 
   return (
     <Menu
       mode="inline"
-      selectedKeys={[getSelectedKey()]}
+      selectedKeys={selectedKeys}
       items={items}
       onClick={({ key }) => {
         router.navigate({ to: key });

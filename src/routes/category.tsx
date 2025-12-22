@@ -1,11 +1,11 @@
 import { PrivateRoute } from "@/components/guards/PrivateRoute";
-import CategoryPage from "@/components/pages/Category";
+import CategoryListPage from "@/features/category/pages/CategoryList";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/category")({
   component: () => (
     <PrivateRoute>
-      <CategoryPage />
+      <CategoryListPage />
     </PrivateRoute>
   ),
 });

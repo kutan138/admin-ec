@@ -1,11 +1,11 @@
 import { PrivateRoute } from "@/components/guards/PrivateRoute";
-import ProductsPage from "@/components/pages/Product";
+import ProductListPage from "@/features/product/pages/ProductListPage";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/product")({
   component: () => (
     <PrivateRoute>
-      <ProductsPage />
+      <ProductListPage />
     </PrivateRoute>
   ),
 });

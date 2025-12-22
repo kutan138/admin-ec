@@ -1,11 +1,11 @@
 import { PrivateRoute } from "@/components/guards/PrivateRoute";
-import OrdersPage from "@/components/pages/Orders";
+import OrderPage from "@/features/order/pages/OrderPage";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/order")({
   component: () => (
     <PrivateRoute>
-      <OrdersPage />
+      <OrderPage />
     </PrivateRoute>
   ),
 });
