@@ -53,10 +53,25 @@ const SideBar = () => {
     },
   ];
 
+    const getSelectedKey = () => {
+    // Thử tìm exact match trước
+    const exactMatch = items.find(item => currentPath === item.key);
+    if (exactMatch) return exactMatch.key;
+
+    // Nếu không có exact match, tìm item nào có path là prefix của currentPath
+    const prefixMatch = items.find(item => {
+      // Đảm bảo không match với root path "/"
+      if (item.key === "/" && currentPath !== "/") return false;
+      return currentPath.startsWith(item.key);
+    });
+    
+    return prefixMatch ? prefixMatch.key : currentPath;
+  };
+
   return (
     <Menu
       mode="inline"
-      selectedKeys={[currentPath]}
+      selectedKeys={[getSelectedKey()]}
       items={items}
       onClick={({ key }) => {
         router.navigate({ to: key });
