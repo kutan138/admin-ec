@@ -6,7 +6,7 @@ import { useCategoryTree } from "@/features/category/hooks/useCategoryTree";
 const { Search } = Input;
 const { DirectoryTree } = Tree;
 
-const CategoryPage = () => {
+const CategoryListPage = () => {
   const [form] = Form.useForm();
   const { categorytreeData, onSelect, onAddCategory, onSearch } =
     useCategoryTree();
@@ -94,4 +94,4 @@ const CategoryPage = () => {
   );
 };
 
-export default CategoryPage;
+export default CategoryListPage;
