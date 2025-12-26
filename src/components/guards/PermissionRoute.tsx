@@ -1,6 +1,6 @@
-import { usePermission } from '@/hooks/usePermission';
-import { Result } from 'antd';
-import type { PropsWithChildren, ReactNode } from 'react';
+import { useHasPermissions } from "@/features/auth/hooks/usePermission";
+import { Result } from "antd";
+import type { PropsWithChildren, ReactNode } from "react";
 
 type Props = PropsWithChildren<{
   required?: string[];
@@ -14,15 +14,11 @@ export const PermissionRoute = ({
   fallback,
   children,
 }: Props) => {
-  const { hasPermission } = usePermission();
+  const isAllowed = useHasPermissions(required, { anyOf });
 
   if (!required.length) {
     return <>{children}</>;
   }
-
-  const isAllowed = anyOf
-    ? required.some((permission) => hasPermission(permission))
-    : required.every((permission) => hasPermission(permission));
 
   if (!isAllowed) {
     return (

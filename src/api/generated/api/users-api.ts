@@ -21,6 +21,8 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { UserProfileDto } from '../models';
 /**
  * UsersApi - axios parameter creator
  * @export
@@ -61,7 +63,8 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Trả về thông tin user dựa trên access token
+         * @summary Lấy thông tin profile người dùng hiện tại
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -115,11 +118,12 @@ export const UsersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Trả về thông tin user dựa trên access token
+         * @summary Lấy thông tin profile người dùng hiện tại
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersControllerGetProfile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async usersControllerGetProfile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserProfileDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerGetProfile(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsersApi.usersControllerGetProfile']?.[localVarOperationServerIndex]?.url;
@@ -144,11 +148,12 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.usersControllerFindAll(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Trả về thông tin user dựa trên access token
+         * @summary Lấy thông tin profile người dùng hiện tại
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersControllerGetProfile(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        usersControllerGetProfile(options?: RawAxiosRequestConfig): AxiosPromise<UserProfileDto> {
             return localVarFp.usersControllerGetProfile(options).then((request) => request(axios, basePath));
         },
     };
@@ -169,12 +174,13 @@ export interface UsersApiInterface {
     usersControllerFindAll(options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * 
+     * Trả về thông tin user dựa trên access token
+     * @summary Lấy thông tin profile người dùng hiện tại
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApiInterface
      */
-    usersControllerGetProfile(options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    usersControllerGetProfile(options?: RawAxiosRequestConfig): AxiosPromise<UserProfileDto>;
 
 }
 
@@ -196,7 +202,8 @@ export class UsersApi extends BaseAPI implements UsersApiInterface {
     }
 
     /**
-     * 
+     * Trả về thông tin user dựa trên access token
+     * @summary Lấy thông tin profile người dùng hiện tại
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi

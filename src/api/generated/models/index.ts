@@ -22,4 +22,5 @@ export * from './token-response-dto';
 export * from './update-cart-item-quantity-dto';
 export * from './update-category-dto';
 export * from './update-product-dto';
+export * from './user-profile-dto';
 export * from './user-response-dto';

@@ -1,26 +1,23 @@
-import { useAuth } from '@/hooks/useAuth';
+import { useUserInfo } from "@/features/auth/hooks/useUserInfo";
 
 const UserInfo = () => {
-    const { user } = useAuth();
-    const displayName = user?.fullName || user?.email || 'User';
+  const { email } = useUserInfo();
+  const displayName = email || "No Name";
 
-    return (
-        <div className="flex items-center gap-3 p-2">
-            <div
-                className="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 h-10"
-                style={{
-                    backgroundImage:
-                        `url("${user?.avatar || 'https://i.pravatar.cc/150?img=3'}")`,
-                }}
-            />
-            <div className="flex flex-col">
-                <h1 className="text-black text-base font-medium leading-normal">{displayName}</h1>
-                <p className="text-black font-normal leading-normal">
-                    {user?.email || 'admin@example.com'}
-                </p>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="flex items-center gap-3 p-2">
+      <div
+        className="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 h-10"
+        style={{
+          backgroundImage: `url("https://i.pravatar.cc/150?img=3")`,
+        }}
+      />
+      <div className="flex flex-col">
+        <h1 className="text-black text-base font-medium">{displayName}</h1>
+        <p className="text-black">{displayName}</p>
+      </div>
+    </div>
+  );
+};
 
-export default UserInfo
+export default UserInfo;

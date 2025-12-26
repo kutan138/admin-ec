@@ -39,6 +39,7 @@ models/token-response-dto.ts
 models/update-cart-item-quantity-dto.ts
 models/update-category-dto.ts
 models/update-product-dto.ts
+models/user-profile-dto.ts
 models/user-response-dto.ts
 package.json
 tsconfig.esm.json

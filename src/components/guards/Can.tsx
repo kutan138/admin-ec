@@ -1,5 +1,5 @@
-import { usePermission } from '@/hooks/usePermission';
-import type { PropsWithChildren, ReactNode } from 'react';
+import { useHasPermissions } from "@/features/auth/hooks/usePermission";
+import type { PropsWithChildren, ReactNode } from "react";
 
 type Props = PropsWithChildren<{
   required?: string[];
@@ -13,15 +13,11 @@ export const Can = ({
   fallback = null,
   children,
 }: Props) => {
-  const { hasPermission } = usePermission();
+  const allowed = useHasPermissions(required, { anyOf });
 
   if (!required.length) {
     return <>{children}</>;
   }
-
-  const allowed = anyOf
-    ? required.some((permission) => hasPermission(permission))
-    : required.every((permission) => hasPermission(permission));
 
   if (!allowed) {
     return <>{fallback}</>;

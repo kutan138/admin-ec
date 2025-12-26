@@ -1,5 +1,5 @@
-import { useAuth } from "@/hooks/useAuth";
-import { useRouterState, useNavigate } from "@tanstack/react-router";
+import { useAuthLogin } from "@/features/auth/hooks/useAuthLogin";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { Alert, Button, Card, Form, Input, Typography } from "antd";
 import { useState } from "react";
 
@@ -9,7 +9,7 @@ type LoginFormValues = {
 };
 
 const LoginPage = () => {
-  const { login, isLoading } = useAuth();
+  const { login, isLoading } = useAuthLogin();
   const navigate = useNavigate();
   const location = useRouterState({ select: (state) => state.location });
   const [error, setError] = useState<string | null>(null);

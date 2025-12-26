@@ -1,26 +1,15 @@
 import BaseHeading from "@/components/common/Heading/BaseHeading";
 import { PlusOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Flex,
-  Form,
-  Input,
-  Switch,
-  Tree,
-  TreeSelect,
-  type TreeDataNode,
-} from "antd";
-import { useCategoryTree } from "../hooks/useCategoryTree";
+import { Button, Flex, Form, Input, Switch, Tree, TreeSelect } from "antd";
+import { useCategoryTree } from "@/features/category/hooks/useCategoryTree";
+
 const { Search } = Input;
 const { DirectoryTree } = Tree;
 
 const CategoryPage = () => {
   const [form] = Form.useForm();
-  const { categories, onSelect, onAddCategory, onSearch } = useCategoryTree();
-  const categorytreeData: TreeDataNode[] = categories.map((category) => ({
-    title: category.name,
-    key: category.id,
-  }));
+  const { categorytreeData, onSelect, onAddCategory, onSearch } =
+    useCategoryTree();
 
   return (
     <div className="flex flex-col gap-4">
