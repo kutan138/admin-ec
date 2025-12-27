@@ -15,10 +15,11 @@ import { Route as ProductRouteImport } from './routes/product'
 import { Route as OrderRouteImport } from './routes/order'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CustomerRouteImport } from './routes/customer'
-import { Route as CategoryRouteRouteImport } from './routes/category.route'
+import { Route as CategoryRouteRouteImport } from './routes/category/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CategoryIndexRouteImport } from './routes/category.index'
-import { Route as CategoryAddRouteImport } from './routes/category.add'
+import { Route as CategoryIndexRouteImport } from './routes/category/index'
+import { Route as CategoryAddRouteImport } from './routes/category/add'
+import { Route as CategoryCategoryIdRouteImport } from './routes/category/$categoryId'
 
 const RoleRoute = RoleRouteImport.update({
   id: '/role',
@@ -70,6 +71,11 @@ const CategoryAddRoute = CategoryAddRouteImport.update({
   path: '/add',
   getParentRoute: () => CategoryRouteRoute,
 } as any)
+const CategoryCategoryIdRoute = CategoryCategoryIdRouteImport.update({
+  id: '/$categoryId',
+  path: '/$categoryId',
+  getParentRoute: () => CategoryRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/product': typeof ProductRoute
   '/profile': typeof ProfileRoute
   '/role': typeof RoleRoute
+  '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/category/add': typeof CategoryAddRoute
   '/category/': typeof CategoryIndexRoute
 }
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/product': typeof ProductRoute
   '/profile': typeof ProfileRoute
   '/role': typeof RoleRoute
+  '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/category/add': typeof CategoryAddRoute
   '/category': typeof CategoryIndexRoute
 }
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/product': typeof ProductRoute
   '/profile': typeof ProfileRoute
   '/role': typeof RoleRoute
+  '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/category/add': typeof CategoryAddRoute
   '/category/': typeof CategoryIndexRoute
 }
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/product'
     | '/profile'
     | '/role'
+    | '/category/$categoryId'
     | '/category/add'
     | '/category/'
   fileRoutesByTo: FileRoutesByTo
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/product'
     | '/profile'
     | '/role'
+    | '/category/$categoryId'
     | '/category/add'
     | '/category'
   id:
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/product'
     | '/profile'
     | '/role'
+    | '/category/$categoryId'
     | '/category/add'
     | '/category/'
   fileRoutesById: FileRoutesById
@@ -228,15 +240,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoryAddRouteImport
       parentRoute: typeof CategoryRouteRoute
     }
+    '/category/$categoryId': {
+      id: '/category/$categoryId'
+      path: '/$categoryId'
+      fullPath: '/category/$categoryId'
+      preLoaderRoute: typeof CategoryCategoryIdRouteImport
+      parentRoute: typeof CategoryRouteRoute
+    }
   }
 }
 
 interface CategoryRouteRouteChildren {
+  CategoryCategoryIdRoute: typeof CategoryCategoryIdRoute
   CategoryAddRoute: typeof CategoryAddRoute
   CategoryIndexRoute: typeof CategoryIndexRoute
 }
 
 const CategoryRouteRouteChildren: CategoryRouteRouteChildren = {
+  CategoryCategoryIdRoute: CategoryCategoryIdRoute,
   CategoryAddRoute: CategoryAddRoute,
   CategoryIndexRoute: CategoryIndexRoute,
 }

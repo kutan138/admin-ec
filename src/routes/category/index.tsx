@@ -1,6 +1,7 @@
-import CategoryListPage from "@/features/category/pages/CategoryList";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/category/")({
-  component: CategoryListPage,
+  component: () => (
+    <div className="text-gray-500">Chọn một category hoặc thêm mới</div>
+  ),
 });

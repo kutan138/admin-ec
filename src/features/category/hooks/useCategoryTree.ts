@@ -1,11 +1,12 @@
 import type { CategoryResponseDto } from "@/api/generated";
-import { Route as CategoryAddRoute } from "@/routes/category.add";
+import { Route as CategoryAddRoute } from "@/routes/category/add";
 import { categoryService } from "@/api/services/category.service";
 import type { Key } from "@rc-component/tree/lib/interface";
 import { useRouter } from "@tanstack/react-router";
 import type { GetProps, Input, TreeDataNode } from "antd";
 import { Tree } from "antd";
 import { useCallback, useEffect, useState } from "react";
+import { Route as CategoryEditRoute } from "@/routes/category/$categoryId";
 
 type DirectoryTreeProps = GetProps<typeof Tree.DirectoryTree>;
 type SearchProps = GetProps<typeof Input.Search>;
@@ -16,7 +17,12 @@ export const useCategoryTree = () => {
   const [categories, setCategories] = useState<CategoryResponseDto[]>([]);
 
   const onSelect: DirectoryTreeProps["onSelect"] = (keys: Key[]) => {
-    console.log("Trigger Select", keys);
+    router.navigate({
+      to: CategoryEditRoute.id,
+      params: {
+        categoryId: String(keys[0]),
+      },
+    });
   };
 
   const categorytreeData: TreeDataNode[] = categories.map((category) => ({
@@ -37,7 +43,7 @@ export const useCategoryTree = () => {
     console.log(value, event, info);
   };
 
-  const onAddCategory = useCallback(() => {
+  const onClickAddCategory = useCallback(() => {
     router.navigate({ to: CategoryAddRoute.id });
   }, [router]);
 
@@ -54,6 +60,6 @@ export const useCategoryTree = () => {
     categories,
     onSelect,
     onSearch,
-    onAddCategory,
+    onClickAddCategory,
   };
 };

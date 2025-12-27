@@ -14,7 +14,7 @@ import { Route as OrdersRoute } from "@/routes/order";
 import { Route as ProductsRoute } from "@/routes/product";
 import { Route as CustomersRoute } from "@/routes/customer";
 import { Route as ProfileRoute } from "@/routes/profile";
-import { Route as CategoryRoute } from "@/routes/category.index";
+import { Route as CategoryRoute } from "@/routes/category";
 import { Route as RoleRoute } from "@/routes/role";
 import { useActiveMenu } from "@/components/layout/hooks/useActiveMenu";
 
