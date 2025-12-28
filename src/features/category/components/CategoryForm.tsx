@@ -1,5 +1,5 @@
 import BaseHeading from "@/components/common/Heading/BaseHeading";
-import { Form, Input, Select, Switch, Button, Divider, Flex } from "antd";
+import { Button, Divider, Flex, Form, Input } from "antd";
 import { useEffect } from "react";
 
 export type CategoryFormValues = {
@@ -23,18 +23,9 @@ type CategoryFormProps = {
   loading?: boolean;
 };
 
-const defaultParentOptions: Option[] = [
-  { value: "none", label: "-- Không có --" },
-  { value: "thoi-trang-nu", label: "Thời trang Nữ" },
-  { value: "thoi-trang-nam", label: "Thời trang Nam" },
-  { value: "phu-kien", label: "Phụ kiện" },
-  { value: "giay-dep", label: "Giày dép" },
-];
-
 export default function CategoryForm({
   mode,
   initialValues,
-  parentOptions = defaultParentOptions,
   onSubmit,
   onCancel,
   submitText = "Lưu",
@@ -67,29 +58,11 @@ export default function CategoryForm({
       <div className="bg-white p-6 rounded-xl border border-gray-200">
         <Form
           layout="vertical"
-          initialValues={{ isActive: true, parent: "none", ...initialValues }}
+          form={form}
           onFinish={onSubmit}
         >
           <Form.Item label="Tên danh mục" name="name">
             <Input placeholder="Ví dụ: Thời trang Nam" />
-          </Form.Item>
-
-          <Form.Item
-            label="Slug (URL)"
-            name="slug"
-            extra="Slug là phiên bản URL thân thiện của tên. Thường là chữ thường và chỉ chứa chữ cái, số và dấu gạch ngang."
-          >
-            <Input placeholder="Ví dụ: thoi-trang-nam" />
-          </Form.Item>
-
-          <Form.Item label="Danh mục cha" name="parent">
-            <Select>
-              {parentOptions.map((opt) => (
-                <Select.Option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </Select.Option>
-              ))}
-            </Select>
           </Form.Item>
 
           <Form.Item label="Mô tả" name="description">
@@ -98,15 +71,6 @@ export default function CategoryForm({
               rows={4}
             />
           </Form.Item>
-
-          <Form.Item
-            label="Trạng thái hiển thị"
-            name="isActive"
-            valuePropName="checked"
-          >
-            <Switch />
-          </Form.Item>
-
           <Divider />
 
           <Form.Item>

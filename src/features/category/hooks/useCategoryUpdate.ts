@@ -3,27 +3,29 @@ import { message } from "antd";
 import { useNavigate } from "@tanstack/react-router";
 import { queryClient } from "@/lib/react-query";
 import { categoryService } from "@/api/services/category.service";
+import type { UpdateCategoryDto } from "@/api/generated";
 import { CATEGORY_TREE_QUERY_KEY } from "./useGetCategoryTree";
-import { Route as CategoryRoute } from "@/routes/category/$categoryId";
 
-export const useCategoryAdd = () => {
+export const useCategoryUpdate = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: categoryService.create,
+    mutationFn: ({ id, data }: { id: string; data: UpdateCategoryDto }) =>
+      categoryService.updateById(id, data),
 
     onSuccess: (response) => {
       const { data } = response;
-      message.success("Tạo danh mục thành công");
+
+      message.success("Cập nhật danh mục thành công");
 
       // 🔄 Refresh tree
       queryClient.invalidateQueries({
         queryKey: CATEGORY_TREE_QUERY_KEY,
       });
 
-      // 👉 Navigate sang edit category vừa tạo
+      // 👉 Navigate sang edit category vừa update
       navigate({
-        to: CategoryRoute.id,
+        to: "/category/$categoryId",
         params: {
           categoryId: String(data.id),
         },
@@ -31,7 +33,7 @@ export const useCategoryAdd = () => {
     },
 
     onError: () => {
-      message.error("Tạo danh mục thất bại");
+      message.error("Cập nhật danh mục thất bại");
     },
   });
 };

@@ -1,27 +1,30 @@
-import { useParams } from "@tanstack/react-router";
-import CategoryForm from "../components/CategoryForm";
 import { Route as CategoryEditRoute } from "@/routes/category/$categoryId";
+import { useParams } from "@tanstack/react-router";
+import CategoryForm, { type CategoryFormValues } from "../components/CategoryForm";
 import { useCategoryDetail } from "../hooks/useCategoryDetail";
-import { Spin } from "antd";
+import { useCategoryUpdate } from "../hooks/useCategoryUpdate";
 
 const CategoryEditContainer = () => {
   const { categoryId } = useParams({
     from: CategoryEditRoute.id,
   });
+  const { mutate: updateCategory, isPending } = useCategoryUpdate();
+  const { data } = useCategoryDetail(categoryId);
+  console.log("🚀 ~ CategoryEditContainer ~ data:", data?.data)
 
-  const { data, isPending } = useCategoryDetail(categoryId);
-  console.log("🚀 ~ CategoryEditContainer ~ categoryId:", categoryId);
+  const onSubmit = (values: CategoryFormValues) => {
+    updateCategory({ id: categoryId, data: { name: values.name, description: values.description } });
+  };
 
-  if (isPending) return <Spin />;
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
 
-  const initValues = data?.data;
   return (
     <CategoryForm
       mode="edit"
-      initialValues={{
-        name: initValues?.name ?? "",
-        description: initValues?.description,
-      }}
+      initialValues={data?.data}
+      onSubmit={onSubmit}
     />
   );
 };

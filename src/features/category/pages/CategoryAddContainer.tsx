@@ -9,6 +9,7 @@ const CategoryAddContainer = () => {
   const onSubmit = (values: CategoryFormValues) => {
     addCategory({ name: values.name, description: values.description });
   };
+
   return <CategoryForm mode="add" onSubmit={onSubmit} loading={isPending} />;
 };
 
