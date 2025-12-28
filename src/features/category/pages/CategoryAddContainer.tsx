@@ -1,7 +1,7 @@
+import { useCategoryAdd } from "@/mutations/category/useCategoryAdd";
 import CategoryForm, {
   type CategoryFormValues,
 } from "../components/CategoryForm";
-import { useCategoryAdd } from "../hooks/useCategoryAdd";
 
 const CategoryAddContainer = () => {
   const { mutate: addCategory, isPending } = useCategoryAdd();

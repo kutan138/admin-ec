@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { message } from "antd";
 import { useNavigate } from "@tanstack/react-router";
-import { queryClient } from "@/lib/react-query";
+import { queryClient } from "@/lib/react-query/queryClient";
 import { categoryService } from "@/api/services/category.service";
 import type { UpdateCategoryDto } from "@/api/generated";
-import { CATEGORY_TREE_QUERY_KEY } from "./useGetCategoryTree";
+import { categoryKeys } from "@/queries/category/category.keys";
 
 export const useCategoryUpdate = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export const useCategoryUpdate = () => {
 
       // 🔄 Refresh tree
       queryClient.invalidateQueries({
-        queryKey: CATEGORY_TREE_QUERY_KEY,
+        queryKey: categoryKeys.tree(),
       });
 
       // 👉 Navigate sang edit category vừa update

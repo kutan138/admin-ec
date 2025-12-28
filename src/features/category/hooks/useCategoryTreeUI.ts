@@ -1,19 +1,16 @@
+import { useCategoryTree } from "@/queries/category/useCategoryTree";
 import { Route as CategoryEditRoute } from "@/routes/category/$categoryId";
 import { Route as CategoryAddRoute } from "@/routes/category/add";
 import type { Key } from "@rc-component/tree/lib/interface";
 import { useRouter } from "@tanstack/react-router";
-import type { GetProps, Input, TreeDataNode } from "antd";
-import { Tree } from "antd";
+import type { TreeDataNode } from "antd";
+import type { SearchProps } from "antd/es/input";
+import type { DirectoryTreeProps } from "antd/es/tree";
 import { useCallback } from "react";
-import { useGetCategoryTree } from "./useGetCategoryTree";
 
-type DirectoryTreeProps = GetProps<typeof Tree.DirectoryTree>;
-type SearchProps = GetProps<typeof Input.Search>;
-
-export const useCategoryTree = () => {
+export const useCategoryTreeUI = () => {
   const router = useRouter();
-
-  const { data: categories = [], isLoading } = useGetCategoryTree();
+  const { data = [], isLoading } = useCategoryTree();
 
   const onSelect: DirectoryTreeProps["onSelect"] = (keys: Key[]) => {
     if (!keys.length) return;
@@ -26,7 +23,7 @@ export const useCategoryTree = () => {
     });
   };
 
-  const categorytreeData: TreeDataNode[] = categories.map((category) => ({
+  const categorytreeData: TreeDataNode[] = data.map((category) => ({
     title: category.name,
     key: category.id,
   }));
@@ -41,10 +38,9 @@ export const useCategoryTree = () => {
 
   return {
     categorytreeData,
-    categories,
     isLoading,
-    onSelect,
     onSearch,
+    onSelect,
     onClickAddCategory,
   };
 };

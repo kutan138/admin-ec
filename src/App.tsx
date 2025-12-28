@@ -5,7 +5,7 @@ import { StyleProvider } from "@ant-design/cssinjs";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./lib/react-query";
+import { queryClient } from "./lib/react-query/queryClient";
 
 // Create a new router instance
 const router = createRouter({ routeTree });

@@ -16,7 +16,8 @@ type CategoryFormProps = {
   mode: "edit" | "add";
   initialValues?: CategoryFormValues;
   parentOptions?: Option[];
-  onSubmit?: (values: CategoryFormValues) => void;
+  onSubmit: (values: CategoryFormValues) => void;
+  onDelete?: () => void;
   onCancel?: () => void;
   submitText?: string;
   cancelText?: string;
@@ -27,12 +28,21 @@ export default function CategoryForm({
   mode,
   initialValues,
   onSubmit,
+  onDelete,
   onCancel,
   submitText = "Lưu",
   cancelText = "Hủy",
   loading = false,
 }: CategoryFormProps) {
   const [form] = Form.useForm<CategoryFormValues>();
+
+  const handleSubmit = (values: CategoryFormValues) => {
+    onSubmit(values);
+
+    if (mode === 'add') {
+      form.resetFields();
+    }
+  }
 
   useEffect(() => {
     if (initialValues) {
@@ -59,7 +69,7 @@ export default function CategoryForm({
         <Form
           layout="vertical"
           form={form}
-          onFinish={onSubmit}
+          onFinish={handleSubmit}
         >
           <Form.Item label="Tên danh mục" name="name">
             <Input placeholder="Ví dụ: Thời trang Nam" />
@@ -75,6 +85,11 @@ export default function CategoryForm({
 
           <Form.Item>
             <div style={{ display: "flex", justifyContent: "end", gap: 12 }}>
+              {mode === 'edit' && onDelete && (
+                <Button danger onClick={onDelete}>
+                  Xóa danh mục
+                </Button>
+              )}
               <Button onClick={onCancel}>{cancelText}</Button>
               <Button type="primary" htmlType="submit" loading={loading}>
                 {submitText}

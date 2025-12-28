@@ -1,15 +1,15 @@
 import BaseHeading from "@/components/common/Heading/BaseHeading";
-import { useCategoryTree } from "@/features/category/hooks/useCategoryTree";
 import { PlusOutlined } from "@ant-design/icons";
 import { Outlet } from "@tanstack/react-router";
 import { Button, Input, Tree } from "antd";
+import { useCategoryTreeUI } from "../hooks/useCategoryTreeUI";
 
 const { Search } = Input;
 const { DirectoryTree } = Tree;
 
 const CategoryLayout = () => {
-  const { categorytreeData, onSelect, onClickAddCategory, onSearch } =
-    useCategoryTree();
+  const { categorytreeData, onSelect, onSearch, onClickAddCategory } =
+    useCategoryTreeUI();
 
   return (
     <div className="flex flex-col gap-4">

@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { message } from "antd";
 import { useNavigate } from "@tanstack/react-router";
-import { queryClient } from "@/lib/react-query";
+import { queryClient } from "@/lib/react-query/queryClient";
 import { categoryService } from "@/api/services/category.service";
-import { CATEGORY_TREE_QUERY_KEY } from "./useGetCategoryTree";
-import { Route as CategoryRoute } from "@/routes/category/$categoryId";
+import { categoryKeys } from "@/queries/category/category.keys";
+import { Route as CategoryRoute } from "@/routes/category/route";
 
 export const useCategoryAdd = () => {
   const navigate = useNavigate();
@@ -12,21 +12,15 @@ export const useCategoryAdd = () => {
   return useMutation({
     mutationFn: categoryService.create,
 
-    onSuccess: (response) => {
-      const { data } = response;
+    onSuccess: () => {
       message.success("Tạo danh mục thành công");
 
-      // 🔄 Refresh tree
       queryClient.invalidateQueries({
-        queryKey: CATEGORY_TREE_QUERY_KEY,
+        queryKey: categoryKeys.tree(),
       });
 
-      // 👉 Navigate sang edit category vừa tạo
       navigate({
         to: CategoryRoute.id,
-        params: {
-          categoryId: String(data.id),
-        },
       });
     },
 
