@@ -7,7 +7,7 @@ const CategoryAddContainer = () => {
   const { mutate: addCategory, isPending } = useCategoryAdd();
 
   const onSubmit = (values: CategoryFormValues) => {
-    addCategory({ name: values.name, description: values.description });
+    addCategory({ name: values.name, description: values.description, parentId: values.parent });
   };
 
   return <CategoryForm mode="add" onSubmit={onSubmit} loading={isPending} />;

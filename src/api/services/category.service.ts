@@ -1,5 +1,9 @@
 import { apiClient } from "@/api/api-client";
-import type { UpdateCategoryDto, CreateCategoryDto } from "@/api/generated";
+import type {
+  UpdateCategoryDto,
+  CreateCategoryDto,
+  ReorderCategoryDto,
+} from "@/api/generated";
 
 const categoryApi = apiClient.categories;
 
@@ -11,4 +15,6 @@ export const categoryService = {
   updateById: (id: string, updateCategoryDto: UpdateCategoryDto) =>
     categoryApi.categoriesControllerUpdate({ id, updateCategoryDto }),
   removeById: (id: string) => categoryApi.categoriesControllerRemove({ id }),
+  reOrderCategories: (reorderCategoryDto: ReorderCategoryDto) =>
+    categoryApi.categoriesControllerReorder({ reorderCategoryDto }),
 };

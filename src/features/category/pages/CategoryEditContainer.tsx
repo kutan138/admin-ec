@@ -15,7 +15,7 @@ const CategoryEditContainer = () => {
   const { mutate: deleteCategory } = useCategoryDelete();
 
   const onSubmit = (values: CategoryFormValues) => {
-    updateCategory({ id: categoryId, data: { name: values.name, description: values.description } });
+    updateCategory({ id: categoryId, data: { name: values.name, description: values.description, parentId: values.parent } });
   };
 
   const onDelete = () => {
@@ -31,6 +31,7 @@ const CategoryEditContainer = () => {
 
   return (
     <CategoryForm
+      categoryId={categoryId}
       mode="edit"
       initialValues={data}
       loading={isPending}

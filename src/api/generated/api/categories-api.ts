@@ -28,6 +28,8 @@ import type { CreateCategoryDto } from '../models';
 // @ts-ignore
 import type { MessageResponseDto } from '../models';
 // @ts-ignore
+import type { ReorderCategoryDto } from '../models';
+// @ts-ignore
 import type { UpdateCategoryDto } from '../models';
 /**
  * CategoriesApi - axios parameter creator
@@ -187,6 +189,46 @@ export const CategoriesApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Reorder categories
+         * @param {ReorderCategoryDto} reorderCategoryDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        categoriesControllerReorder: async (reorderCategoryDto: ReorderCategoryDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'reorderCategoryDto' is not null or undefined
+            assertParamExists('categoriesControllerReorder', 'reorderCategoryDto', reorderCategoryDto)
+            const localVarPath = `/categories/reorder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication access-token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(reorderCategoryDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update a category
          * @param {string} id 
          * @param {UpdateCategoryDto} updateCategoryDto 
@@ -292,6 +334,19 @@ export const CategoriesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Reorder categories
+         * @param {ReorderCategoryDto} reorderCategoryDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async categoriesControllerReorder(reorderCategoryDto: ReorderCategoryDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.categoriesControllerReorder(reorderCategoryDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CategoriesApi.categoriesControllerReorder']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Update a category
          * @param {string} id 
          * @param {UpdateCategoryDto} updateCategoryDto 
@@ -355,6 +410,16 @@ export const CategoriesApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
+         * @summary Reorder categories
+         * @param {CategoriesApiCategoriesControllerReorderRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        categoriesControllerReorder(requestParameters: CategoriesApiCategoriesControllerReorderRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponseDto> {
+            return localVarFp.categoriesControllerReorder(requestParameters.reorderCategoryDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Update a category
          * @param {CategoriesApiCategoriesControllerUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -413,6 +478,16 @@ export interface CategoriesApiInterface {
 
     /**
      * 
+     * @summary Reorder categories
+     * @param {CategoriesApiCategoriesControllerReorderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CategoriesApiInterface
+     */
+    categoriesControllerReorder(requestParameters: CategoriesApiCategoriesControllerReorderRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponseDto>;
+
+    /**
+     * 
      * @summary Update a category
      * @param {CategoriesApiCategoriesControllerUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -463,6 +538,20 @@ export interface CategoriesApiCategoriesControllerRemoveRequest {
      * @memberof CategoriesApiCategoriesControllerRemove
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for categoriesControllerReorder operation in CategoriesApi.
+ * @export
+ * @interface CategoriesApiCategoriesControllerReorderRequest
+ */
+export interface CategoriesApiCategoriesControllerReorderRequest {
+    /**
+     * 
+     * @type {ReorderCategoryDto}
+     * @memberof CategoriesApiCategoriesControllerReorder
+     */
+    readonly reorderCategoryDto: ReorderCategoryDto
 }
 
 /**
@@ -538,6 +627,18 @@ export class CategoriesApi extends BaseAPI implements CategoriesApiInterface {
      */
     public categoriesControllerRemove(requestParameters: CategoriesApiCategoriesControllerRemoveRequest, options?: RawAxiosRequestConfig) {
         return CategoriesApiFp(this.configuration).categoriesControllerRemove(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Reorder categories
+     * @param {CategoriesApiCategoriesControllerReorderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CategoriesApi
+     */
+    public categoriesControllerReorder(requestParameters: CategoriesApiCategoriesControllerReorderRequest, options?: RawAxiosRequestConfig) {
+        return CategoriesApiFp(this.configuration).categoriesControllerReorder(requestParameters.reorderCategoryDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

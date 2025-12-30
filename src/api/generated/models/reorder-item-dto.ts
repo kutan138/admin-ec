@@ -17,26 +17,20 @@
 /**
  * 
  * @export
- * @interface UpdateCategoryDto
+ * @interface ReorderItemDto
  */
-export interface UpdateCategoryDto {
+export interface ReorderItemDto {
     /**
-     * Category name
+     * 
      * @type {string}
-     * @memberof UpdateCategoryDto
+     * @memberof ReorderItemDto
      */
-    'name'?: string;
+    'id': string;
     /**
-     * Category description
-     * @type {string}
-     * @memberof UpdateCategoryDto
+     * 
+     * @type {number}
+     * @memberof ReorderItemDto
      */
-    'description'?: string;
-    /**
-     * Parent category ID
-     * @type {string}
-     * @memberof UpdateCategoryDto
-     */
-    'parentId'?: string;
+    'order': number;
 }
 

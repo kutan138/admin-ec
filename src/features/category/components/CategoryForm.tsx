@@ -1,6 +1,7 @@
 import BaseHeading from "@/components/common/Heading/BaseHeading";
-import { Button, Divider, Flex, Form, Input } from "antd";
+import { Button, Divider, Flex, Form, Input, TreeSelect } from "antd";
 import { useEffect } from "react";
+import { useCategoryForm } from "../hooks/useCategoryForm";
 
 export type CategoryFormValues = {
   name: string;
@@ -13,6 +14,7 @@ export type CategoryFormValues = {
 type Option = { label: string; value: string };
 
 type CategoryFormProps = {
+  categoryId?: string;
   mode: "edit" | "add";
   initialValues?: CategoryFormValues;
   parentOptions?: Option[];
@@ -25,6 +27,7 @@ type CategoryFormProps = {
 };
 
 export default function CategoryForm({
+  categoryId,
   mode,
   initialValues,
   onSubmit,
@@ -35,6 +38,7 @@ export default function CategoryForm({
   loading = false,
 }: CategoryFormProps) {
   const [form] = Form.useForm<CategoryFormValues>();
+  const { categorytreeData } = useCategoryForm(categoryId ? [categoryId] : []);
 
   const handleSubmit = (values: CategoryFormValues) => {
     onSubmit(values);
@@ -62,7 +66,7 @@ export default function CategoryForm({
         subtitle={
           mode === "add"
             ? "Điền thông tin chi tiết để tạo một danh mục sản phẩm mới."
-            : ""
+            : "Chỉnh sửa thông tin danh mục sản phẩm."
         }
       />
       <div className="bg-white p-6 rounded-xl border border-gray-200">
@@ -82,19 +86,29 @@ export default function CategoryForm({
             />
           </Form.Item>
           <Divider />
+          <Form.Item name="parent" label="Danh mục cha">
+            <TreeSelect
+              placeholder="Chọn danh mục cha (nếu có)"
+              treeData={categorytreeData}
+              allowClear
+              treeDefaultExpandAll
+            />
+          </Form.Item>
 
           <Form.Item>
-            <div style={{ display: "flex", justifyContent: "end", gap: 12 }}>
-              {mode === 'edit' && onDelete && (
+            <Flex justify="space-between" align="center">
+              {mode === 'edit' && (
                 <Button danger onClick={onDelete}>
                   Xóa danh mục
                 </Button>
               )}
-              <Button onClick={onCancel}>{cancelText}</Button>
-              <Button type="primary" htmlType="submit" loading={loading}>
-                {submitText}
-              </Button>
-            </div>
+              <div style={{ display: "flex", justifyContent: "end", gap: 12 }}>
+                <Button onClick={onCancel}>{cancelText}</Button>
+                <Button type="primary" htmlType="submit" loading={loading}>
+                  {submitText}
+                </Button>
+              </div>
+            </Flex>
           </Form.Item>
         </Form>
       </div>

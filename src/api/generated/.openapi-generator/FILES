@@ -33,13 +33,14 @@ models/permission-response-dto.ts
 models/product-image-response-dto.ts
 models/product-response-dto.ts
 models/register-dto.ts
+models/reorder-category-dto.ts
+models/reorder-item-dto.ts
 models/reset-password-dto.ts
 models/role-response-dto.ts
 models/token-response-dto.ts
 models/update-cart-item-quantity-dto.ts
 models/update-category-dto.ts
 models/update-product-dto.ts
-models/user-profile-dto.ts
 models/user-response-dto.ts
 package.json
 tsconfig.esm.json

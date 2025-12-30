@@ -8,7 +8,7 @@ const { Search } = Input;
 const { DirectoryTree } = Tree;
 
 const CategoryLayout = () => {
-  const { categorytreeData, onSelect, onSearch, onClickAddCategory } =
+  const { categorytreeData, onSelect, onSearch, onClickAddCategory, onDrop } =
     useCategoryTreeUI();
 
   return (
@@ -22,12 +22,7 @@ const CategoryLayout = () => {
         <div className="lg:col-span-1 bg-white p-6 rounded-xl border border-gray-200">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Danh sách danh mục</h2>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              size="large"
-              onClick={onClickAddCategory}
-            />
+
           </div>
           {/* <!-- SearchBar --> */}
           <div className="mb-4">
@@ -46,16 +41,15 @@ const CategoryLayout = () => {
               expandAction={false}
               defaultExpandAll
               onSelect={onSelect}
+              onDrop={onDrop}
               treeData={categorytreeData}
-              className="text-md
-    [&_.ant-tree-node-content-wrapper]:flex
-    [&_.ant-tree-node-content-wrapper]:items-center
-    [&_.ant-tree-node-content-wrapper]:min-h-2
-    [&_.ant-tree-node-content-wrapper]:px-1
-    [&_.ant-tree-node-content-wrapper]:py-1
-    [&_.ant-tree-draggable-icon]:self-center"
             />
           </div>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={onClickAddCategory}
+          >Thêm mới</Button>
         </div>
         {/* <!-- Right Column: Form --> */}
         <div className="lg:col-span-2 bg-white p-6 rounded-xl border border-gray-200 self-start">

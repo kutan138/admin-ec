@@ -39,6 +39,12 @@ export interface CategoryResponseDto {
      */
     'description'?: string;
     /**
+     * Parent category ID
+     * @type {string}
+     * @memberof CategoryResponseDto
+     */
+    'parentId'?: string;
+    /**
      * Category creation date
      * @type {string}
      * @memberof CategoryResponseDto
