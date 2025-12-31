@@ -4,12 +4,15 @@ import { Route as CategoryEditRoute } from "@/routes/category/$categoryId";
 import { Route as CategoryAddRoute } from "@/routes/category/add";
 import type { Key } from "@rc-component/tree/lib/interface";
 import { useRouter } from "@tanstack/react-router";
-import type { TreeDataNode, TreeProps } from "antd";
+import type { TreeProps } from "antd";
 import type { SearchProps } from "antd/es/input";
 import type { DirectoryTreeProps } from "antd/es/tree";
 import { useCallback, useMemo, useState } from "react";
-import { buildCategoryTree } from "../utils/buildCategoryTree";
-import { buildReorderPayload } from "../utils/buildReorderPayload";
+import {
+  buildCategoryTree,
+  buildReorderPayload,
+  type DirectoryTreeData,
+} from "@/features/category/utils";
 
 export const useCategoryTreeUI = () => {
   const router = useRouter();
@@ -19,10 +22,8 @@ export const useCategoryTreeUI = () => {
     () => buildCategoryTree({ categories: data }),
     [data]
   );
-  console.log("🚀 ~ useCategoryTreeUI ~ categorytreeData:", categorytreeData);
-
   // null = chưa drag, dùng server data
-  const [gData, setGData] = useState<TreeDataNode[]>([]);
+  const [gData, setGData] = useState<DirectoryTreeData[]>([]);
 
   const treeData = gData.length ? gData : categorytreeData;
 
@@ -30,14 +31,18 @@ export const useCategoryTreeUI = () => {
     const dropKey = String(info.node.key);
     const dragKey = String(info.dragNode.key);
 
-    const data = [...categorytreeData];
+    const data: DirectoryTreeData[] = [...categorytreeData];
 
-    let dragObj!: TreeDataNode;
+    let dragObj!: DirectoryTreeData;
 
     const loop = (
-      nodes: TreeDataNode[],
+      nodes: DirectoryTreeData[],
       key: React.Key,
-      callback: (node: TreeDataNode, index: number, arr: TreeDataNode[]) => void
+      callback: (
+        node: DirectoryTreeData,
+        index: number,
+        arr: DirectoryTreeData[]
+      ) => void
     ) => {
       for (let i = 0; i < nodes.length; i++) {
         if (nodes[i].key === key) {
@@ -56,7 +61,7 @@ export const useCategoryTreeUI = () => {
     });
 
     let parentId: string | null = null;
-    let siblings: TreeDataNode[] = [];
+    let siblings: DirectoryTreeData[] = [];
 
     if (!info.dropToGap) {
       // 2️⃣ Drop vào node → làm con
@@ -68,7 +73,7 @@ export const useCategoryTreeUI = () => {
       });
     } else {
       // 3️⃣ Drop cùng level
-      let arr: TreeDataNode[] = [];
+      let arr: DirectoryTreeData[] = [];
       let index = 0;
 
       loop(data, dropKey, (_item, i, a) => {
@@ -92,8 +97,6 @@ export const useCategoryTreeUI = () => {
     }
 
     setGData(data);
-    console.log("🚀 ~ onDrop ~ data:", data);
-    // 4️⃣ CALL API reorder
     reorderCategories(buildReorderPayload(parentId, siblings));
   };
 

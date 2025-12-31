@@ -1,45 +1,84 @@
 import type { CategoryResponseDto } from "@/api/generated";
-import type { TreeDataNode } from "antd";
+import type { GetProp, TreeProps } from "antd";
+import type { DirectoryTreeProps } from "antd/es/tree";
 
-export const buildCategoryTree = ({
-  categories,
-  notIncludeIds = [],
-}: {
+export type DirectoryTreeData = GetProp<DirectoryTreeProps, "treeData">[number];
+export type TreeSelectData = GetProp<TreeProps, "treeData">[number];
+
+type Mode = "DirectoryTreeData" | "TreeSelect";
+
+type ModeMap = {
+  DirectoryTreeData: DirectoryTreeData;
+  TreeSelect: TreeSelectData;
+};
+
+type BuildParams<M extends Mode> = {
   categories: CategoryResponseDto[];
   notIncludeIds?: string[];
-}): TreeDataNode[] => {
-  const map = new Map<string, TreeDataNode>();
+  mode?: M;
+};
+
+/* =======================
+   🔹 Overloads
+======================= */
+
+export function buildCategoryTree(
+  params: BuildParams<"DirectoryTreeData">
+): DirectoryTreeData[];
+
+export function buildCategoryTree(
+  params: BuildParams<"TreeSelect">
+): TreeSelectData[];
+
+/* =======================
+   🔹 Implementation
+======================= */
+
+export function buildCategoryTree<M extends Mode>({
+  categories,
+  notIncludeIds = [],
+  mode = "DirectoryTreeData" as M,
+}: BuildParams<M>): ModeMap[M][] {
   const excluded = new Set(notIncludeIds);
-  const roots: TreeDataNode[] = [];
+  const nodeMap = new Map<string, ModeMap[M]>();
+  const roots: ModeMap[M][] = [];
 
-  // 1️⃣ tạo map (bỏ qua node bị exclude)
-  categories.forEach((c) => {
-    if (excluded.has(c.id)) return;
+  const createNode = (c: CategoryResponseDto): ModeMap[M] => {
+    if (mode === "DirectoryTreeData") {
+      return {
+        key: c.id,
+        title: c.name,
+        children: [],
+      } as ModeMap[M];
+    }
 
-    map.set(c.id, {
-      title: c.name,
+    return {
       key: c.id,
+      value: c.id,
+      title: c.name,
       children: [],
-    });
-  });
+    } as ModeMap[M];
+  };
 
-  // 2️⃣ build tree
-  categories.forEach((c) => {
-    if (excluded.has(c.id)) return;
+  // 1️⃣ Tạo node map
+  for (const c of categories) {
+    if (excluded.has(c.id)) continue;
+    nodeMap.set(c.id, createNode(c));
+  }
 
-    const node = map.get(c.id);
-    if (!node) return;
+  // 2️⃣ Build tree
+  for (const c of categories) {
+    if (excluded.has(c.id)) continue;
 
-    // Nếu parent bị exclude → node cũng bị loại
-    if (c.parentId && excluded.has(c.parentId)) return;
+    const node = nodeMap.get(c.id);
+    if (!node) continue;
 
-    if (!c.parentId) {
+    if (!c.parentId || excluded.has(c.parentId)) {
       roots.push(node);
     } else {
-      const parent = map.get(c.parentId);
-      parent?.children?.push(node);
+      nodeMap.get(c.parentId)?.children?.push(node);
     }
-  });
+  }
 
   return roots;
-};
+}
