@@ -43,10 +43,10 @@ export default function CategoryForm({
   const handleSubmit = (values: CategoryFormValues) => {
     onSubmit(values);
 
-    if (mode === 'add') {
+    if (mode === "add") {
       form.resetFields();
     }
-  }
+  };
 
   useEffect(() => {
     if (initialValues) {
@@ -70,11 +70,7 @@ export default function CategoryForm({
         }
       />
       <div className="bg-white p-6 rounded-xl border border-gray-200">
-        <Form
-          layout="vertical"
-          form={form}
-          onFinish={handleSubmit}
-        >
+        <Form layout="vertical" form={form} onFinish={handleSubmit}>
           <Form.Item label="Tên danh mục" name="name">
             <Input placeholder="Ví dụ: Thời trang Nam" />
           </Form.Item>
@@ -97,7 +93,7 @@ export default function CategoryForm({
 
           <Form.Item>
             <Flex justify="space-between" align="center">
-              {mode === 'edit' && (
+              {mode === "edit" && (
                 <Button danger onClick={onDelete}>
                   Xóa danh mục
                 </Button>

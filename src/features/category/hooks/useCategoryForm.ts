@@ -1,15 +1,21 @@
 // features/category/hooks/useCategoryForm.ts
 
+import {
+  buildCategoryTree,
+  type TreeSelectData,
+} from "@/features/category/utils/buildCategoryTree";
 import { useCategoryTree } from "@/queries/category/useCategoryTree";
-import type { DataNode } from "antd/es/tree";
-import { buildCategoryTree } from "../utils/buildCategoryTree";
 
 export const useCategoryForm = (notIncludeIds: string[] = []) => {
   const { data: categories = [] } = useCategoryTree();
 
-  const treeData: DataNode[] = buildCategoryTree({ categories, notIncludeIds });
+  const categorytreeData: TreeSelectData[] = buildCategoryTree({
+    categories,
+    notIncludeIds,
+    mode: "TreeSelect",
+  });
 
   return {
-    categorytreeData: treeData,
+    categorytreeData,
   };
 };

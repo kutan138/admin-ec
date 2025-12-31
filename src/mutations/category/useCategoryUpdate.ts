@@ -5,6 +5,7 @@ import { queryClient } from "@/lib/react-query/queryClient";
 import { categoryService } from "@/api/services/category.service";
 import type { UpdateCategoryDto } from "@/api/generated";
 import { categoryKeys } from "@/queries/category/category.keys";
+import { Route as CategoryDetailRoute } from "@/routes/category/$categoryId";
 
 export const useCategoryUpdate = () => {
   const navigate = useNavigate();
@@ -25,9 +26,9 @@ export const useCategoryUpdate = () => {
 
       // 👉 Navigate sang edit category vừa update
       navigate({
-        to: "/category/$categoryId",
+        to: CategoryDetailRoute.id,
         params: {
-          categoryId: String(data.id),
+          categoryId: data.id,
         },
       });
     },
