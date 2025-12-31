@@ -1,4 +1,5 @@
 export const AuthStatus = {
+  IDLE: "0",
   LOADING: "1",
   UN_AUTHENTICATED: "2",
   AUTHENTICATED: "3",

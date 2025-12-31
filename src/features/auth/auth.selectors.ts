@@ -28,8 +28,6 @@ export const selectIsAuthenticated = (s: AuthState) => {
   return s.isAuthenticated && s.isReady;
 };
 
-export const selectLogin = (s: AuthState) => s.login;
-
 export const selectAuthStatus = (s: AuthState) => ({
   isLoading: s.isLoading,
   isAuthenticated: s.isAuthenticated && s.isReady,

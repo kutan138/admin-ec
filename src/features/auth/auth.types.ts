@@ -1,5 +1,4 @@
-import type { LoginDto } from "@/api/generated";
-
+import type { UserProfileDto } from "@/api/generated";
 export type AuthState = {
   email: string;
   roles: Set<string>;
@@ -7,6 +6,7 @@ export type AuthState = {
   isLoading: boolean;
   isAuthenticated: boolean;
   isReady: boolean;
-  login: (payload: LoginDto) => Promise<void>;
-  logout: () => void;
+  setAuth: (payload: UserProfileDto) => Promise<void>;
+  setLoading: (payload: boolean) => void;
+  reset: () => void;
 };

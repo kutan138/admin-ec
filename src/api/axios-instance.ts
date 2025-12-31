@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookieManager } from "@/utils/cookies";
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
-import { authApi } from "./api-client";
+import { refreshAuthApi } from "./api-client";
+import { useAuthStore } from "@/features/auth/auth.store";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
 export const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -51,7 +52,12 @@ axiosInstance.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
+      skipAuthRefresh?: boolean;
     };
+
+    if (originalRequest?.skipAuthRefresh) {
+      return Promise.reject(error);
+    }
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
@@ -72,14 +78,16 @@ axiosInstance.interceptors.response.use(
 
       const refreshToken = cookieManager.getRefreshToken();
 
+      const logout = useAuthStore.getState().reset;
+
       if (!refreshToken) {
-        cookieManager.clearTokens();
+        logout();
         window.location.href = "/login";
         return Promise.reject(error);
       }
 
       try {
-        const response = await authApi.authControllerRefresh();
+        const response = await refreshAuthApi.authControllerRefresh();
         const { accessToken, refreshToken } = response.data;
         cookieManager.setAccessToken(accessToken);
         cookieManager.setRefreshToken(refreshToken);
@@ -91,8 +99,9 @@ axiosInstance.interceptors.response.use(
         processQueue(null, accessToken);
         return axiosInstance(originalRequest);
       } catch (refreshError) {
+        console.log("🚀 ~ refreshError:", refreshError);
         processQueue(refreshError, null);
-        cookieManager.clearTokens();
+        logout();
         window.location.href = "/login";
         return Promise.reject(refreshError);
       } finally {

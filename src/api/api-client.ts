@@ -1,6 +1,7 @@
 import { Configuration } from "./generated/configuration";
 import { AuthApi, CategoriesApi, UsersApi } from "./generated/api";
 import { axiosInstance } from "./axios-instance";
+import { axiosRefreshInstance } from "./axios-refresh-instance";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
@@ -18,9 +19,17 @@ export const categoriesApi = new CategoriesApi(
   axiosInstance
 );
 
+// Refresh token in response intercepter can not throw error
+export const refreshAuthApi = new AuthApi(
+  apiConfig,
+  undefined,
+  axiosRefreshInstance
+);
+
 // Helper functions
 export const apiClient = {
   auth: authApi,
   users: usersApi,
   categories: categoriesApi,
+  refreshAuthApi,
 };

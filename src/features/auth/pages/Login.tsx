@@ -1,7 +1,8 @@
-import { useAuthLogin } from "@/features/auth/hooks/useAuthLogin";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { Alert, Button, Card, Form, Input, Typography } from "antd";
 import { useState } from "react";
+import { loginAction } from "../auth.actions";
+import { useAuthLoading } from "../hooks/useAuthLoading";
 
 type LoginFormValues = {
   email: string;
@@ -9,7 +10,7 @@ type LoginFormValues = {
 };
 
 const LoginPage = () => {
-  const { login, isLoading } = useAuthLogin();
+  const isLoading = useAuthLoading();
   const navigate = useNavigate();
   const location = useRouterState({ select: (state) => state.location });
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +21,7 @@ const LoginPage = () => {
   const handleSubmit = async (values: LoginFormValues) => {
     setError(null);
     try {
-      await login(values);
+      await loginAction(values);
       navigate({ to: redirectTo, replace: true });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {

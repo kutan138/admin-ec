@@ -1,11 +1,7 @@
-// stores/auth.store.ts
-import { authService } from "@/api/services/auth.service";
-import { userService } from "@/api/services/user.service";
-import { cookieManager } from "@/utils/cookies";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { AuthState } from "./auth.types";
-import { AuthStatus } from "./auth.constants";
+import type { UserProfileDto } from "@/api/generated";
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -15,39 +11,21 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       isReady: true,
       email: "",
-      status: AuthStatus.LOADING,
       roles: new Set<string>(),
       permissions: new Set<string>(),
-
-      login: async (payload) => {
-        set({ isLoading: true, isReady: false });
-
-        try {
-          const loginResponse = await authService.login({
-            email: payload.email,
-            password: payload.password,
-          });
-          const { accessToken, refreshToken } = loginResponse.data;
-
-          cookieManager.setAccessToken(accessToken);
-          cookieManager.setRefreshToken(refreshToken);
-
-          const profileResponse = await userService.getProfile();
-          const { email, permissions, roles } = profileResponse.data;
-
-          set({
-            isAuthenticated: true,
-            email,
-            roles: new Set(roles),
-            permissions: new Set(permissions),
-          });
-        } finally {
-          set({ isLoading: false, isReady: true });
-        }
+      setLoading: (isLoading: boolean) => {
+        set({ isLoading });
       },
-
-      logout: () => {
-        cookieManager.clearTokens();
+      setAuth: async ({ email, roles, permissions }: UserProfileDto) => {
+        set({
+          isReady: true,
+          isAuthenticated: true,
+          email,
+          roles: new Set(roles),
+          permissions: new Set(permissions),
+        });
+      },
+      reset: () => {
         set({
           isLoading: false,
           isAuthenticated: false,

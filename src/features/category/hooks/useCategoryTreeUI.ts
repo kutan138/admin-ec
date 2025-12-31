@@ -1,4 +1,4 @@
-import { useCategoryReorder } from "@/mutations/category/useCategoryReorder";
+import { useCategoryReorder } from "@/queries/category/useCategoryReorder";
 import { useCategoryTree } from "@/queries/category/useCategoryTree";
 import { Route as CategoryEditRoute } from "@/routes/category/$categoryId";
 import { Route as CategoryAddRoute } from "@/routes/category/add";
