@@ -1,33 +1,63 @@
-import { useCategoryReorder } from "@/queries/category/useCategoryReorder";
-import { useCategoryTree } from "@/queries/category/useCategoryTree";
-import { Route as CategoryEditRoute } from "@/routes/category/$categoryId";
-import { Route as CategoryAddRoute } from "@/routes/category/add";
-import type { Key } from "@rc-component/tree/lib/interface";
-import { useRouter } from "@tanstack/react-router";
-import type { TreeProps } from "antd";
-import type { SearchProps } from "antd/es/input";
-import type { DirectoryTreeProps } from "antd/es/tree";
-import { useCallback, useMemo, useState } from "react";
 import {
   buildCategoryTree,
   buildReorderPayload,
   type DirectoryTreeData,
 } from "@/features/category/utils";
+import { useCategoryReorder } from "@/queries/category/useCategoryReorder";
+import { useCategoryTree } from "@/queries/category/useCategoryTree";
+import { Route as CategoryEditRoute } from "@/routes/category/$categoryId";
+import { Route as CategoryAddRoute } from "@/routes/category/add";
+import type { Key } from "@rc-component/tree/lib/interface";
+import { useMatch, useRouter } from "@tanstack/react-router";
+import type { TreeProps } from "antd";
+import type { SearchProps } from "antd/es/input";
+import type { DirectoryTreeProps } from "antd/es/tree";
+import { useCallback, useMemo, useState } from "react";
 
 export const useCategoryTreeUI = () => {
   const router = useRouter();
+  const editMatch = useMatch({
+    from: CategoryEditRoute.id,
+    shouldThrow: false,
+  });
+
+  const categoryId = editMatch?.params.categoryId;
   const { data = [], isLoading } = useCategoryTree();
-  const { mutate: reorderCategories } = useCategoryReorder();
+  const { mutate: reorderCategories } = useCategoryReorder({
+    onSuccess: () => {
+      setGData([]);
+    },
+  });
   const categorytreeData = useMemo(
     () => buildCategoryTree({ categories: data }),
     [data]
   );
   // null = chưa drag, dùng server data
   const [gData, setGData] = useState<DirectoryTreeData[]>([]);
+  const [selectKeys, setSelectKeys] = useState<React.Key[]>(
+    categoryId ? [categoryId] : []
+  );
 
   const treeData = gData.length ? gData : categorytreeData;
 
+  const expandableKeys = useMemo(() => {
+    const keys: React.Key[] = [];
+
+    const loop = (items: DirectoryTreeData[]) => {
+      for (const item of items) {
+        if (item.children?.length) {
+          keys.push(item.key);
+          loop(item.children);
+        }
+      }
+    };
+
+    loop(treeData);
+    return keys;
+  }, [treeData]);
+
   const onDrop: TreeProps["onDrop"] = (info) => {
+    setSelectKeys([info.node.key]);
     const dropKey = String(info.node.key);
     const dragKey = String(info.dragNode.key);
 
@@ -102,7 +132,7 @@ export const useCategoryTreeUI = () => {
 
   const onSelect: DirectoryTreeProps["onSelect"] = (keys: Key[]) => {
     if (!keys.length) return;
-
+    setSelectKeys(keys);
     router.navigate({
       to: CategoryEditRoute.id,
       params: {
@@ -122,6 +152,8 @@ export const useCategoryTreeUI = () => {
   return {
     categorytreeData: treeData,
     isLoading,
+    selectKeys,
+    expandableKeys,
     onSearch,
     onSelect,
     onDrop,

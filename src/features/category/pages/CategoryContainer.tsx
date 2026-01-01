@@ -8,7 +8,7 @@ const { Search } = Input;
 const { DirectoryTree } = Tree;
 
 const CategoryLayout = () => {
-  const { categorytreeData, onSelect, onSearch, onClickAddCategory, onDrop } =
+  const { categorytreeData, expandableKeys, selectKeys, onSelect, onSearch, onClickAddCategory, onDrop, } =
     useCategoryTreeUI();
 
   return (
@@ -38,14 +38,16 @@ const CategoryLayout = () => {
             <DirectoryTree
               multiple
               draggable
+              selectedKeys={selectKeys}
+              expandedKeys={expandableKeys}
               expandAction={false}
-              defaultExpandAll
               onSelect={onSelect}
               onDrop={onDrop}
               treeData={categorytreeData}
             />
           </div>
           <Button
+            className="mt-6"
             type="primary"
             icon={<PlusOutlined />}
             onClick={onClickAddCategory}

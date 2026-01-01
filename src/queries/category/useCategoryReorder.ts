@@ -5,7 +5,7 @@ import { categoryService } from "@/api/services/category.service";
 import { categoryKeys } from "@/queries/category/category.keys";
 import type { ReorderCategoryDto } from "@/api/generated";
 
-export const useCategoryReorder = () => {
+export const useCategoryReorder = (options?: { onSuccess?: () => void }) => {
   return useMutation({
     mutationFn: (reorderCategoryDto: ReorderCategoryDto) =>
       categoryService.reOrderCategories(reorderCategoryDto),
@@ -17,6 +17,8 @@ export const useCategoryReorder = () => {
       queryClient.invalidateQueries({
         queryKey: categoryKeys.tree(),
       });
+
+      options?.onSuccess?.();
     },
 
     onError: () => {
