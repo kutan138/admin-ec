@@ -7,12 +7,14 @@ import { useAuthStore } from "@/features/auth/auth.store";
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
-export const axiosInstance = axios.create({
+export const baseConfig = {
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
-});
+};
+
+export const axiosInstance = axios.create(baseConfig);
 
 // Request Interceptor - Thêm Bearer token từ cookies
 axiosInstance.interceptors.request.use(

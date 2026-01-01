@@ -1,13 +1,12 @@
 import { cookieManager } from "@/utils/cookies";
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
+import { baseConfig } from "./axios-instance";
 
-export const axiosRefreshInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-});
+export const axiosRefreshInstance = axios.create(baseConfig);
 
 axiosRefreshInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = cookieManager.getAccessToken();
+    const token = cookieManager.getRefreshToken();
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
