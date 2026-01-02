@@ -1,11 +1,11 @@
 import { PrivateRoute } from "@/components/guards/PrivateRoute";
-import ProductListPage from "@/features/product/pages/ProductListPage";
+import MainLayout from "@/components/layout/MainLayout";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/product")({
+export const Route = createFileRoute("/_authenticated")({
   component: () => (
     <PrivateRoute>
-      <ProductListPage />
+      <MainLayout />
     </PrivateRoute>
   ),
 });

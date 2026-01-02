@@ -9,7 +9,7 @@ export const usePermissionAdd = () => {
     mutationFn: permissionService.create,
 
     onSuccess: () => {
-      message.success("Tạo danh mục thành công");
+      message.success("Tạo quyền thành công");
 
       queryClient.invalidateQueries({
         queryKey: permissionKeys.all,
@@ -17,7 +17,7 @@ export const usePermissionAdd = () => {
     },
 
     onError: () => {
-      message.error("Tạo danh mục thất bại");
+      message.error("Tạo quyền thất bại");
     },
   });
 };

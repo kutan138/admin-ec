@@ -1,4 +1,4 @@
-import { Route as CategoryEditRoute } from "@/routes/category/$categoryId";
+import { Route as CategoryEditRoute } from "@/routes/_authenticated/category/$id";
 import { useParams } from "@tanstack/react-router";
 import CategoryForm, {
   type CategoryFormValues,
@@ -9,7 +9,7 @@ import { useCategoryDelete } from "@/queries/category/useCategoryDelete";
 import { Modal } from "antd";
 
 const CategoryEditContainer = () => {
-  const { categoryId } = useParams({
+  const { id: categoryId } = useParams({
     from: CategoryEditRoute.id,
   });
   const { mutate: updateCategory, isPending } = useCategoryUpdate();

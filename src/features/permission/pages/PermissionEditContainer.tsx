@@ -1,28 +1,30 @@
-import { Route as CategoryEditRoute } from "@/routes/category/$categoryId";
+import { Route as PermissionEditRoute } from "@/routes/_authenticated/permission/$id";
 import { useParams } from "@tanstack/react-router";
-import CategoryForm, {
-  type CategoryFormValues,
-} from "../components/PermissionForm";
-import { useCategoryUpdate } from "@/queries/category/useCategoryUpdate";
-import { useCategoryDetail } from "@/queries/category/useCategoryDetail";
-import { useCategoryDelete } from "@/queries/category/useCategoryDelete";
-import { Modal } from "antd";
+import PermissionForm, { type FormValues } from "../components/PermissionForm";
+import { usePermissionUpdate } from "@/queries/permission/usePermissionUpdate";
+import { usePermissionDelete } from "@/queries/permission/usePermissionDelete";
+import { Form, Modal } from "antd";
+import { usePermissionUI } from "../hooks/usePermissionUI";
+import BaseHeading from "@/components/common/Heading/BaseHeading";
+import { useEffect } from "react";
+import { usePermissionDetail } from "@/queries/permission/usePermissionDetail";
 
-const CategoryEditContainer = () => {
-  const { categoryId } = useParams({
-    from: CategoryEditRoute.id,
+const PermissionEditContainer = () => {
+  const { id } = useParams({
+    from: PermissionEditRoute.id,
   });
-  const { mutate: updateCategory, isPending } = useCategoryUpdate();
-  const { data } = useCategoryDetail(categoryId);
-  const { mutate: deleteCategory } = useCategoryDelete();
+  const { mutate: updateCategory, isPending } = usePermissionUpdate();
+  const { mutate: deletePermission } = usePermissionDelete();
+  const { data } = usePermissionDetail(id);
+  const { handleCancel } = usePermissionUI();
+  const [form] = Form.useForm<FormValues>();
 
-  const onSubmit = (values: CategoryFormValues) => {
+  const onSubmit = (values: FormValues) => {
     updateCategory({
-      id: categoryId,
+      id,
       data: {
         name: values.name,
         description: values.description,
-        parentId: values.parent,
       },
     });
   };
@@ -34,20 +36,33 @@ const CategoryEditContainer = () => {
       okText: "Xoá",
       okType: "danger",
       centered: true,
-      onOk: () => deleteCategory(categoryId),
+      onOk: () => deletePermission(id),
     });
   };
 
+  useEffect(() => {
+    if (data) {
+      form.setFieldsValue({
+        name: data.name,
+        description: data.description,
+      });
+    } else {
+      form.resetFields();
+    }
+  }, [data, form]);
+
   return (
-    <CategoryForm
-      categoryId={categoryId}
-      mode="edit"
-      initialValues={data}
-      loading={isPending}
-      onDelete={onDelete}
-      onSubmit={onSubmit}
-    />
+    <div className="flex flex-col gap-4">
+      <BaseHeading title="Chỉnh sửa quyền hạn" />
+      <PermissionForm
+        form={form}
+        loading={isPending}
+        onSubmit={onSubmit}
+        onDelete={onDelete}
+        onCancel={handleCancel}
+      />
+    </div>
   );
 };
 
-export default CategoryEditContainer;
+export default PermissionEditContainer;

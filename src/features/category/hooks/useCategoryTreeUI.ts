@@ -1,18 +1,17 @@
+import { APP_ROUTES } from "@/config/app.routes";
+import {
+  buildCategoryTree,
+  buildReorderPayload,
+  type DirectoryTreeData,
+} from "@/features/category/utils";
 import { useCategoryReorder } from "@/queries/category/useCategoryReorder";
 import { useCategoryTree } from "@/queries/category/useCategoryTree";
-import { Route as CategoryEditRoute } from "@/routes/category/$categoryId";
-import { Route as CategoryAddRoute } from "@/routes/category/add";
 import type { Key } from "@rc-component/tree/lib/interface";
 import { useRouter } from "@tanstack/react-router";
 import type { TreeProps } from "antd";
 import type { SearchProps } from "antd/es/input";
 import type { DirectoryTreeProps } from "antd/es/tree";
 import { useCallback, useMemo, useState } from "react";
-import {
-  buildCategoryTree,
-  buildReorderPayload,
-  type DirectoryTreeData,
-} from "@/features/category/utils";
 
 export const useCategoryTreeUI = () => {
   const router = useRouter();
@@ -104,9 +103,9 @@ export const useCategoryTreeUI = () => {
     if (!keys.length) return;
 
     router.navigate({
-      to: CategoryEditRoute.id,
+      to: APP_ROUTES.categoryEdit.to,
       params: {
-        categoryId: String(keys[0]),
+        id: String(keys[0]),
       },
     });
   };
@@ -116,7 +115,7 @@ export const useCategoryTreeUI = () => {
   };
 
   const onClickAddCategory = useCallback(() => {
-    router.navigate({ to: CategoryAddRoute.id });
+    router.navigate({ to: APP_ROUTES.categoryAdd.to });
   }, [router]);
 
   return {

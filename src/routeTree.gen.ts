@@ -9,215 +9,150 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RoleRouteImport } from './routes/role'
-import { Route as ProfileRouteImport } from './routes/profile'
-import { Route as ProductRouteImport } from './routes/product'
-import { Route as PermissionRouteImport } from './routes/permission'
-import { Route as OrderRouteImport } from './routes/order'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as CustomerRouteImport } from './routes/customer'
-import { Route as CategoryRouteRouteImport } from './routes/category/route'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as CategoryIndexRouteImport } from './routes/category/index'
-import { Route as CategoryAddRouteImport } from './routes/category/add'
-import { Route as CategoryCategoryIdRouteImport } from './routes/category/$categoryId'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedCategoryRouteRouteImport } from './routes/_authenticated/category/route'
+import { Route as AuthenticatedPermissionIndexRouteImport } from './routes/_authenticated/permission/index'
+import { Route as AuthenticatedCategoryIndexRouteImport } from './routes/_authenticated/category/index'
+import { Route as AuthenticatedPermissionAddRouteImport } from './routes/_authenticated/permission/add'
+import { Route as AuthenticatedPermissionIdRouteImport } from './routes/_authenticated/permission/$id'
+import { Route as AuthenticatedCategoryAddRouteImport } from './routes/_authenticated/category/add'
+import { Route as AuthenticatedCategoryIdRouteImport } from './routes/_authenticated/category/$id'
 
-const RoleRoute = RoleRouteImport.update({
-  id: '/role',
-  path: '/role',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProfileRoute = ProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductRoute = ProductRouteImport.update({
-  id: '/product',
-  path: '/product',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PermissionRoute = PermissionRouteImport.update({
-  id: '/permission',
-  path: '/permission',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OrderRoute = OrderRouteImport.update({
-  id: '/order',
-  path: '/order',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CustomerRoute = CustomerRouteImport.update({
-  id: '/customer',
-  path: '/customer',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CategoryRouteRoute = CategoryRouteRouteImport.update({
-  id: '/category',
-  path: '/category',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const CategoryIndexRoute = CategoryIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => CategoryRouteRoute,
-} as any)
-const CategoryAddRoute = CategoryAddRouteImport.update({
-  id: '/add',
-  path: '/add',
-  getParentRoute: () => CategoryRouteRoute,
-} as any)
-const CategoryCategoryIdRoute = CategoryCategoryIdRouteImport.update({
-  id: '/$categoryId',
-  path: '/$categoryId',
-  getParentRoute: () => CategoryRouteRoute,
+const AuthenticatedCategoryRouteRoute =
+  AuthenticatedCategoryRouteRouteImport.update({
+    id: '/category',
+    path: '/category',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPermissionIndexRoute =
+  AuthenticatedPermissionIndexRouteImport.update({
+    id: '/permission/',
+    path: '/permission/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCategoryIndexRoute =
+  AuthenticatedCategoryIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedCategoryRouteRoute,
+  } as any)
+const AuthenticatedPermissionAddRoute =
+  AuthenticatedPermissionAddRouteImport.update({
+    id: '/permission/add',
+    path: '/permission/add',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPermissionIdRoute =
+  AuthenticatedPermissionIdRouteImport.update({
+    id: '/permission/$id',
+    path: '/permission/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCategoryAddRoute =
+  AuthenticatedCategoryAddRouteImport.update({
+    id: '/add',
+    path: '/add',
+    getParentRoute: () => AuthenticatedCategoryRouteRoute,
+  } as any)
+const AuthenticatedCategoryIdRoute = AuthenticatedCategoryIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AuthenticatedCategoryRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/category': typeof CategoryRouteRouteWithChildren
-  '/customer': typeof CustomerRoute
   '/login': typeof LoginRoute
-  '/order': typeof OrderRoute
-  '/permission': typeof PermissionRoute
-  '/product': typeof ProductRoute
-  '/profile': typeof ProfileRoute
-  '/role': typeof RoleRoute
-  '/category/$categoryId': typeof CategoryCategoryIdRoute
-  '/category/add': typeof CategoryAddRoute
-  '/category/': typeof CategoryIndexRoute
+  '/category': typeof AuthenticatedCategoryRouteRouteWithChildren
+  '/': typeof AuthenticatedIndexRoute
+  '/category/$id': typeof AuthenticatedCategoryIdRoute
+  '/category/add': typeof AuthenticatedCategoryAddRoute
+  '/permission/$id': typeof AuthenticatedPermissionIdRoute
+  '/permission/add': typeof AuthenticatedPermissionAddRoute
+  '/category/': typeof AuthenticatedCategoryIndexRoute
+  '/permission': typeof AuthenticatedPermissionIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/customer': typeof CustomerRoute
   '/login': typeof LoginRoute
-  '/order': typeof OrderRoute
-  '/permission': typeof PermissionRoute
-  '/product': typeof ProductRoute
-  '/profile': typeof ProfileRoute
-  '/role': typeof RoleRoute
-  '/category/$categoryId': typeof CategoryCategoryIdRoute
-  '/category/add': typeof CategoryAddRoute
-  '/category': typeof CategoryIndexRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/category/$id': typeof AuthenticatedCategoryIdRoute
+  '/category/add': typeof AuthenticatedCategoryAddRoute
+  '/permission/$id': typeof AuthenticatedPermissionIdRoute
+  '/permission/add': typeof AuthenticatedPermissionAddRoute
+  '/category': typeof AuthenticatedCategoryIndexRoute
+  '/permission': typeof AuthenticatedPermissionIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/category': typeof CategoryRouteRouteWithChildren
-  '/customer': typeof CustomerRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
-  '/order': typeof OrderRoute
-  '/permission': typeof PermissionRoute
-  '/product': typeof ProductRoute
-  '/profile': typeof ProfileRoute
-  '/role': typeof RoleRoute
-  '/category/$categoryId': typeof CategoryCategoryIdRoute
-  '/category/add': typeof CategoryAddRoute
-  '/category/': typeof CategoryIndexRoute
+  '/_authenticated/category': typeof AuthenticatedCategoryRouteRouteWithChildren
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/category/$id': typeof AuthenticatedCategoryIdRoute
+  '/_authenticated/category/add': typeof AuthenticatedCategoryAddRoute
+  '/_authenticated/permission/$id': typeof AuthenticatedPermissionIdRoute
+  '/_authenticated/permission/add': typeof AuthenticatedPermissionAddRoute
+  '/_authenticated/category/': typeof AuthenticatedCategoryIndexRoute
+  '/_authenticated/permission/': typeof AuthenticatedPermissionIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/category'
-    | '/customer'
     | '/login'
-    | '/order'
-    | '/permission'
-    | '/product'
-    | '/profile'
-    | '/role'
-    | '/category/$categoryId'
+    | '/category'
+    | '/'
+    | '/category/$id'
     | '/category/add'
+    | '/permission/$id'
+    | '/permission/add'
     | '/category/'
+    | '/permission'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/customer'
     | '/login'
-    | '/order'
-    | '/permission'
-    | '/product'
-    | '/profile'
-    | '/role'
-    | '/category/$categoryId'
+    | '/'
+    | '/category/$id'
     | '/category/add'
+    | '/permission/$id'
+    | '/permission/add'
     | '/category'
+    | '/permission'
   id:
     | '__root__'
-    | '/'
-    | '/category'
-    | '/customer'
+    | '/_authenticated'
     | '/login'
-    | '/order'
-    | '/permission'
-    | '/product'
-    | '/profile'
-    | '/role'
-    | '/category/$categoryId'
-    | '/category/add'
-    | '/category/'
+    | '/_authenticated/category'
+    | '/_authenticated/'
+    | '/_authenticated/category/$id'
+    | '/_authenticated/category/add'
+    | '/_authenticated/permission/$id'
+    | '/_authenticated/permission/add'
+    | '/_authenticated/category/'
+    | '/_authenticated/permission/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  CategoryRouteRoute: typeof CategoryRouteRouteWithChildren
-  CustomerRoute: typeof CustomerRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
-  OrderRoute: typeof OrderRoute
-  PermissionRoute: typeof PermissionRoute
-  ProductRoute: typeof ProductRoute
-  ProfileRoute: typeof ProfileRoute
-  RoleRoute: typeof RoleRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/role': {
-      id: '/role'
-      path: '/role'
-      fullPath: '/role'
-      preLoaderRoute: typeof RoleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/product': {
-      id: '/product'
-      path: '/product'
-      fullPath: '/product'
-      preLoaderRoute: typeof ProductRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/permission': {
-      id: '/permission'
-      path: '/permission'
-      fullPath: '/permission'
-      preLoaderRoute: typeof PermissionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/order': {
-      id: '/order'
-      path: '/order'
-      fullPath: '/order'
-      preLoaderRoute: typeof OrderRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -225,77 +160,112 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/customer': {
-      id: '/customer'
-      path: '/customer'
-      fullPath: '/customer'
-      preLoaderRoute: typeof CustomerRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/category': {
-      id: '/category'
-      path: '/category'
-      fullPath: '/category'
-      preLoaderRoute: typeof CategoryRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/category/': {
-      id: '/category/'
+    '/_authenticated/category': {
+      id: '/_authenticated/category'
+      path: '/category'
+      fullPath: '/category'
+      preLoaderRoute: typeof AuthenticatedCategoryRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/permission/': {
+      id: '/_authenticated/permission/'
+      path: '/permission'
+      fullPath: '/permission'
+      preLoaderRoute: typeof AuthenticatedPermissionIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/category/': {
+      id: '/_authenticated/category/'
       path: '/'
       fullPath: '/category/'
-      preLoaderRoute: typeof CategoryIndexRouteImport
-      parentRoute: typeof CategoryRouteRoute
+      preLoaderRoute: typeof AuthenticatedCategoryIndexRouteImport
+      parentRoute: typeof AuthenticatedCategoryRouteRoute
     }
-    '/category/add': {
-      id: '/category/add'
+    '/_authenticated/permission/add': {
+      id: '/_authenticated/permission/add'
+      path: '/permission/add'
+      fullPath: '/permission/add'
+      preLoaderRoute: typeof AuthenticatedPermissionAddRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/permission/$id': {
+      id: '/_authenticated/permission/$id'
+      path: '/permission/$id'
+      fullPath: '/permission/$id'
+      preLoaderRoute: typeof AuthenticatedPermissionIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/category/add': {
+      id: '/_authenticated/category/add'
       path: '/add'
       fullPath: '/category/add'
-      preLoaderRoute: typeof CategoryAddRouteImport
-      parentRoute: typeof CategoryRouteRoute
+      preLoaderRoute: typeof AuthenticatedCategoryAddRouteImport
+      parentRoute: typeof AuthenticatedCategoryRouteRoute
     }
-    '/category/$categoryId': {
-      id: '/category/$categoryId'
-      path: '/$categoryId'
-      fullPath: '/category/$categoryId'
-      preLoaderRoute: typeof CategoryCategoryIdRouteImport
-      parentRoute: typeof CategoryRouteRoute
+    '/_authenticated/category/$id': {
+      id: '/_authenticated/category/$id'
+      path: '/$id'
+      fullPath: '/category/$id'
+      preLoaderRoute: typeof AuthenticatedCategoryIdRouteImport
+      parentRoute: typeof AuthenticatedCategoryRouteRoute
     }
   }
 }
 
-interface CategoryRouteRouteChildren {
-  CategoryCategoryIdRoute: typeof CategoryCategoryIdRoute
-  CategoryAddRoute: typeof CategoryAddRoute
-  CategoryIndexRoute: typeof CategoryIndexRoute
+interface AuthenticatedCategoryRouteRouteChildren {
+  AuthenticatedCategoryIdRoute: typeof AuthenticatedCategoryIdRoute
+  AuthenticatedCategoryAddRoute: typeof AuthenticatedCategoryAddRoute
+  AuthenticatedCategoryIndexRoute: typeof AuthenticatedCategoryIndexRoute
 }
 
-const CategoryRouteRouteChildren: CategoryRouteRouteChildren = {
-  CategoryCategoryIdRoute: CategoryCategoryIdRoute,
-  CategoryAddRoute: CategoryAddRoute,
-  CategoryIndexRoute: CategoryIndexRoute,
+const AuthenticatedCategoryRouteRouteChildren: AuthenticatedCategoryRouteRouteChildren =
+  {
+    AuthenticatedCategoryIdRoute: AuthenticatedCategoryIdRoute,
+    AuthenticatedCategoryAddRoute: AuthenticatedCategoryAddRoute,
+    AuthenticatedCategoryIndexRoute: AuthenticatedCategoryIndexRoute,
+  }
+
+const AuthenticatedCategoryRouteRouteWithChildren =
+  AuthenticatedCategoryRouteRoute._addFileChildren(
+    AuthenticatedCategoryRouteRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCategoryRouteRoute: typeof AuthenticatedCategoryRouteRouteWithChildren
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedPermissionIdRoute: typeof AuthenticatedPermissionIdRoute
+  AuthenticatedPermissionAddRoute: typeof AuthenticatedPermissionAddRoute
+  AuthenticatedPermissionIndexRoute: typeof AuthenticatedPermissionIndexRoute
 }
 
-const CategoryRouteRouteWithChildren = CategoryRouteRoute._addFileChildren(
-  CategoryRouteRouteChildren,
-)
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCategoryRouteRoute: AuthenticatedCategoryRouteRouteWithChildren,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedPermissionIdRoute: AuthenticatedPermissionIdRoute,
+  AuthenticatedPermissionAddRoute: AuthenticatedPermissionAddRoute,
+  AuthenticatedPermissionIndexRoute: AuthenticatedPermissionIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  CategoryRouteRoute: CategoryRouteRouteWithChildren,
-  CustomerRoute: CustomerRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   LoginRoute: LoginRoute,
-  OrderRoute: OrderRoute,
-  PermissionRoute: PermissionRoute,
-  ProductRoute: ProductRoute,
-  ProfileRoute: ProfileRoute,
-  RoleRoute: RoleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

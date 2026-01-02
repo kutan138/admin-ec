@@ -1,11 +1,11 @@
-import { useMatchRoute } from "@tanstack/react-router";
+import type { SidebarRoute } from "@/config/sidebar.routes";
+import { useRouterState } from "@tanstack/react-router";
 
-export function useActiveMenu(sidebarRoutes: { key: string; label: string }[]) {
-  const matchRoute = useMatchRoute();
+export function useActiveMenu(sidebarRoutes: SidebarRoute[]) {
+  const pathname = useRouterState({
+    select: (s) => s.location.pathname,
+  });
+  const selectedKey = sidebarRoutes.find((r) => r.match(pathname))?.key;
 
-  const matches = sidebarRoutes
-    .filter((route) => matchRoute({ to: route.key, fuzzy: true }))
-    .sort((a, b) => b.key.length - a.key.length); // Longest first
-
-  return matches[0] ? [matches[0].key] : [];
+  return selectedKey;
 }

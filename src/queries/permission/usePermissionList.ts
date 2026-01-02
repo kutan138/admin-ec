@@ -2,13 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { permissionService } from "@/api/services/permission.service";
 import { permissionKeys } from "./permission.keys";
 
-export const usePermissionDetail = (id: string) => {
+export const useCategoryPermissionList = () => {
   return useQuery({
-    queryKey: permissionKeys.detail(id),
+    queryKey: permissionKeys.all,
     queryFn: async () => {
-      const res = await permissionService.getById(id);
+      const res = await permissionService.getAll();
       return res.data;
     },
-    enabled: !!id,
   });
 };

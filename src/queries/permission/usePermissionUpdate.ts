@@ -2,22 +2,22 @@ import { useMutation } from "@tanstack/react-query";
 import { message } from "antd";
 import { useNavigate } from "@tanstack/react-router";
 import { queryClient } from "@/lib/react-query/queryClient";
-import { categoryService } from "@/api/services/category.service";
+import { permissionService } from "@/api/services/permission.service";
 import type { UpdateCategoryDto } from "@/api/generated";
 import { categoryKeys } from "@/queries/category/category.keys";
-import { Route as CategoryDetailRoute } from "@/routes/category/$categoryId";
+import { APP_ROUTES } from "@/config/app.routes";
 
 export const usePermissionUpdate = () => {
   const navigate = useNavigate();
 
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateCategoryDto }) =>
-      categoryService.updateById(id, data),
+      permissionService.updateById(id, data),
 
     onSuccess: (response) => {
       const { data } = response;
 
-      message.success("Cập nhật danh mục thành công");
+      message.success("Cập nhật quyền thành công");
 
       // 🔄 Refresh tree
       queryClient.invalidateQueries({
@@ -26,15 +26,15 @@ export const usePermissionUpdate = () => {
 
       // 👉 Navigate sang edit category vừa update
       navigate({
-        to: CategoryDetailRoute.id,
+        to: APP_ROUTES.permissionEdit.to,
         params: {
-          categoryId: data.id,
+          id: data.id,
         },
       });
     },
 
     onError: () => {
-      message.error("Cập nhật danh mục thất bại");
+      message.error("Cập nhật quyền thất bại");
     },
   });
 };

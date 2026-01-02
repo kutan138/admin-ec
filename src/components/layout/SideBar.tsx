@@ -1,73 +1,52 @@
+import { useActiveMenu } from "@/components/layout/hooks/useActiveMenu";
+import { APP_ROUTES } from "@/config/app.routes";
+import { type SidebarRoute } from "@/config/sidebar.routes";
 import {
-  AppstoreOutlined,
   DashboardOutlined,
   FileProtectOutlined,
-  ShoppingCartOutlined,
   TagsOutlined,
-  UserAddOutlined,
-  UsergroupAddOutlined,
 } from "@ant-design/icons";
+import { useNavigate } from "@tanstack/react-router";
 import { Menu } from "antd";
-import { useRouter } from "@tanstack/react-router";
-import { Route as DashboardRoute } from "@/routes";
-import { Route as OrdersRoute } from "@/routes/order";
-import { Route as ProductsRoute } from "@/routes/product";
-import { Route as CustomersRoute } from "@/routes/customer";
-import { Route as ProfileRoute } from "@/routes/profile";
-import { Route as CategoryRoute } from "@/routes/category";
-import { Route as RoleRoute } from "@/routes/role";
-import { useActiveMenu } from "@/components/layout/hooks/useActiveMenu";
 
 const SideBar = () => {
-  const router = useRouter();
+  const navigate = useNavigate();
 
-  const items = [
+  const sidebarRoutes: SidebarRoute[] = [
     {
-      key: DashboardRoute.id,
-      icon: <DashboardOutlined />,
-      label: "Dashboard",
+      key: APP_ROUTES.home.to,
+      icon: DashboardOutlined,
+      label: "Trang chủ",
+      match: APP_ROUTES.home.match,
     },
     {
-      key: CategoryRoute.id,
-      icon: <TagsOutlined />,
-      label: "Danh Mục",
+      key: APP_ROUTES.category.to,
+      icon: TagsOutlined,
+      label: "Danh mục",
+      match: APP_ROUTES.category.match,
     },
     {
-      key: OrdersRoute.id,
-      icon: <ShoppingCartOutlined />,
-      label: "Đơn Hàng",
-    },
-    {
-      key: ProductsRoute.id,
-      icon: <AppstoreOutlined />,
-      label: "Sản Phẩm",
-    },
-    {
-      key: CustomersRoute.id,
-      icon: <UsergroupAddOutlined />,
-      label: "Khách Hàng",
-    },
-    {
-      key: ProfileRoute.id,
-      icon: <UserAddOutlined />,
-      label: "User Profile",
-    },
-    {
-      key: RoleRoute.id,
-      icon: <FileProtectOutlined />,
-      label: "Role",
+      key: APP_ROUTES.permission.to,
+      icon: FileProtectOutlined,
+      label: "Quyền",
+      match: APP_ROUTES.permission.match,
     },
   ];
-
-  const selectedKeys = useActiveMenu(items);
+  const selectedKeys = useActiveMenu(sidebarRoutes);
 
   return (
     <Menu
       mode="inline"
-      selectedKeys={selectedKeys}
-      items={items}
-      onClick={({ key }) => {
-        router.navigate({ to: key });
+      selectedKeys={selectedKeys ? [selectedKeys] : []}
+      items={sidebarRoutes.map(({ key, label, icon: Icon }) => {
+        return {
+          key: key,
+          label: label,
+          icon: <Icon />,
+        };
+      })}
+      onClick={(e) => {
+        navigate({ to: e.key });
       }}
     />
   );

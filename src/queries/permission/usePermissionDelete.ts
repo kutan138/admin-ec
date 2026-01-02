@@ -2,30 +2,30 @@ import { useMutation } from "@tanstack/react-query";
 import { message } from "antd";
 import { useNavigate } from "@tanstack/react-router";
 import { queryClient } from "@/lib/react-query/queryClient";
-import { categoryService } from "@/api/services/category.service";
-import { categoryKeys } from "@/queries/category/category.keys";
-import { Route as CategoryAddRoute } from "@/routes/category/add";
+import { permissionService } from "@/api/services/permission.service";
+import { APP_ROUTES } from "@/config/app.routes";
+import { permissionKeys } from "./permission.keys";
 
-export const useCategoryDelete = () => {
+export const usePermissionDelete = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: (id: string) => categoryService.removeById(id),
+    mutationFn: (id: string) => permissionService.removeById(id),
 
     onSuccess: () => {
-      message.success("Xoá danh mục thành công");
+      message.success("Xoá quyền thành công");
 
-      // 🔄 Refresh category tree
+      // 🔄 Refresh
       queryClient.invalidateQueries({
-        queryKey: categoryKeys.tree(),
+        queryKey: permissionKeys.all,
       });
 
-      // 👉 Quay về danh sách category
-      navigate({ to: CategoryAddRoute.id });
+      // 👉 Quay về danh sách
+      navigate({ to: APP_ROUTES.permission.to });
     },
 
     onError: () => {
-      message.error("Xoá danh mục thất bại");
+      message.error("Xoá quyền thất bại");
     },
   });
 };

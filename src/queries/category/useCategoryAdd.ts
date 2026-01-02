@@ -4,7 +4,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { queryClient } from "@/lib/react-query/queryClient";
 import { categoryService } from "@/api/services/category.service";
 import { categoryKeys } from "@/queries/category/category.keys";
-import { Route as CategoryRoute } from "@/routes/category/route";
+import { Route as CategoryRoute } from "@/routes/_authenticated/category/route";
 
 export const useCategoryAdd = () => {
   const navigate = useNavigate();
