@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as RoleRouteImport } from './routes/role'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ProductRouteImport } from './routes/product'
+import { Route as PermissionRouteImport } from './routes/permission'
 import { Route as OrderRouteImport } from './routes/order'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CustomerRouteImport } from './routes/customer'
@@ -34,6 +35,11 @@ const ProfileRoute = ProfileRouteImport.update({
 const ProductRoute = ProductRouteImport.update({
   id: '/product',
   path: '/product',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PermissionRoute = PermissionRouteImport.update({
+  id: '/permission',
+  path: '/permission',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrderRoute = OrderRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/customer': typeof CustomerRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/permission': typeof PermissionRoute
   '/product': typeof ProductRoute
   '/profile': typeof ProfileRoute
   '/role': typeof RoleRoute
@@ -95,6 +102,7 @@ export interface FileRoutesByTo {
   '/customer': typeof CustomerRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/permission': typeof PermissionRoute
   '/product': typeof ProductRoute
   '/profile': typeof ProfileRoute
   '/role': typeof RoleRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/customer': typeof CustomerRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/permission': typeof PermissionRoute
   '/product': typeof ProductRoute
   '/profile': typeof ProfileRoute
   '/role': typeof RoleRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/customer'
     | '/login'
     | '/order'
+    | '/permission'
     | '/product'
     | '/profile'
     | '/role'
@@ -136,6 +146,7 @@ export interface FileRouteTypes {
     | '/customer'
     | '/login'
     | '/order'
+    | '/permission'
     | '/product'
     | '/profile'
     | '/role'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/customer'
     | '/login'
     | '/order'
+    | '/permission'
     | '/product'
     | '/profile'
     | '/role'
@@ -163,6 +175,7 @@ export interface RootRouteChildren {
   CustomerRoute: typeof CustomerRoute
   LoginRoute: typeof LoginRoute
   OrderRoute: typeof OrderRoute
+  PermissionRoute: typeof PermissionRoute
   ProductRoute: typeof ProductRoute
   ProfileRoute: typeof ProfileRoute
   RoleRoute: typeof RoleRoute
@@ -189,6 +202,13 @@ declare module '@tanstack/react-router' {
       path: '/product'
       fullPath: '/product'
       preLoaderRoute: typeof ProductRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/permission': {
+      id: '/permission'
+      path: '/permission'
+      fullPath: '/permission'
+      preLoaderRoute: typeof PermissionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/order': {
@@ -272,6 +292,7 @@ const rootRouteChildren: RootRouteChildren = {
   CustomerRoute: CustomerRoute,
   LoginRoute: LoginRoute,
   OrderRoute: OrderRoute,
+  PermissionRoute: PermissionRoute,
   ProductRoute: ProductRoute,
   ProfileRoute: ProfileRoute,
   RoleRoute: RoleRoute,

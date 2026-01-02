@@ -17,26 +17,14 @@
 /**
  * 
  * @export
- * @interface CreatePermissionDto
+ * @interface UpdatePermissionDto
  */
-export interface CreatePermissionDto {
-    /**
-     * Permission key (module.action)
-     * @type {string}
-     * @memberof CreatePermissionDto
-     */
-    'name': string;
+export interface UpdatePermissionDto {
     /**
      * 
      * @type {string}
-     * @memberof CreatePermissionDto
+     * @memberof UpdatePermissionDto
      */
     'description'?: string;
-    /**
-     * Đánh dấu permission hệ thống
-     * @type {boolean}
-     * @memberof CreatePermissionDto
-     */
-    'isSystem'?: boolean;
 }
 

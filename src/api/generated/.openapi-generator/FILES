@@ -30,6 +30,7 @@ models/index.ts
 models/login-dto.ts
 models/message-response-dto.ts
 models/permission-response-dto.ts
+models/permission.ts
 models/product-image-response-dto.ts
 models/product-response-dto.ts
 models/register-dto.ts
@@ -40,6 +41,7 @@ models/role-response-dto.ts
 models/token-response-dto.ts
 models/update-cart-item-quantity-dto.ts
 models/update-category-dto.ts
+models/update-permission-dto.ts
 models/update-product-dto.ts
 models/user-profile-dto.ts
 models/user-response-dto.ts

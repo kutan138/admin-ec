@@ -24,7 +24,9 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { CreatePermissionDto } from '../models';
 // @ts-ignore
-import type { PermissionResponseDto } from '../models';
+import type { Permission } from '../models';
+// @ts-ignore
+import type { UpdatePermissionDto } from '../models';
 /**
  * PermissionsApi - axios parameter creator
  * @export
@@ -33,7 +35,7 @@ export const PermissionsApiAxiosParamCreator = function (configuration?: Configu
     return {
         /**
          * 
-         * @summary Create a new permission
+         * @summary Tạo permission mới
          * @param {CreatePermissionDto} createPermissionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -71,6 +73,160 @@ export const PermissionsApiAxiosParamCreator = function (configuration?: Configu
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Danh sách permission
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsControllerFindAll: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/permissions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication access-token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Chi tiết permission
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsControllerFindOne: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('permissionsControllerFindOne', 'id', id)
+            const localVarPath = `/permissions/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication access-token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Xóa permission
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsControllerRemove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('permissionsControllerRemove', 'id', id)
+            const localVarPath = `/permissions/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication access-token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Cập nhật permission
+         * @param {string} id 
+         * @param {UpdatePermissionDto} updatePermissionDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsControllerUpdate: async (id: string, updatePermissionDto: UpdatePermissionDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('permissionsControllerUpdate', 'id', id)
+            // verify required parameter 'updatePermissionDto' is not null or undefined
+            assertParamExists('permissionsControllerUpdate', 'updatePermissionDto', updatePermissionDto)
+            const localVarPath = `/permissions/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication access-token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updatePermissionDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -83,15 +239,67 @@ export const PermissionsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Create a new permission
+         * @summary Tạo permission mới
          * @param {CreatePermissionDto} createPermissionDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async permissionsControllerCreate(createPermissionDto: CreatePermissionDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PermissionResponseDto>> {
+        async permissionsControllerCreate(createPermissionDto: CreatePermissionDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Permission>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.permissionsControllerCreate(createPermissionDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PermissionsApi.permissionsControllerCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Danh sách permission
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async permissionsControllerFindAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Permission>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.permissionsControllerFindAll(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PermissionsApi.permissionsControllerFindAll']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Chi tiết permission
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async permissionsControllerFindOne(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Permission>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.permissionsControllerFindOne(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PermissionsApi.permissionsControllerFindOne']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Xóa permission
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async permissionsControllerRemove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.permissionsControllerRemove(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PermissionsApi.permissionsControllerRemove']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Cập nhật permission
+         * @param {string} id 
+         * @param {UpdatePermissionDto} updatePermissionDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async permissionsControllerUpdate(id: string, updatePermissionDto: UpdatePermissionDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Permission>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.permissionsControllerUpdate(id, updatePermissionDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PermissionsApi.permissionsControllerUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -106,13 +314,52 @@ export const PermissionsApiFactory = function (configuration?: Configuration, ba
     return {
         /**
          * 
-         * @summary Create a new permission
+         * @summary Tạo permission mới
          * @param {PermissionsApiPermissionsControllerCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        permissionsControllerCreate(requestParameters: PermissionsApiPermissionsControllerCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PermissionResponseDto> {
+        permissionsControllerCreate(requestParameters: PermissionsApiPermissionsControllerCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<Permission> {
             return localVarFp.permissionsControllerCreate(requestParameters.createPermissionDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Danh sách permission
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsControllerFindAll(options?: RawAxiosRequestConfig): AxiosPromise<Array<Permission>> {
+            return localVarFp.permissionsControllerFindAll(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Chi tiết permission
+         * @param {PermissionsApiPermissionsControllerFindOneRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsControllerFindOne(requestParameters: PermissionsApiPermissionsControllerFindOneRequest, options?: RawAxiosRequestConfig): AxiosPromise<Permission> {
+            return localVarFp.permissionsControllerFindOne(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Xóa permission
+         * @param {PermissionsApiPermissionsControllerRemoveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsControllerRemove(requestParameters: PermissionsApiPermissionsControllerRemoveRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.permissionsControllerRemove(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Cập nhật permission
+         * @param {PermissionsApiPermissionsControllerUpdateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsControllerUpdate(requestParameters: PermissionsApiPermissionsControllerUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<Permission> {
+            return localVarFp.permissionsControllerUpdate(requestParameters.id, requestParameters.updatePermissionDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -125,13 +372,52 @@ export const PermissionsApiFactory = function (configuration?: Configuration, ba
 export interface PermissionsApiInterface {
     /**
      * 
-     * @summary Create a new permission
+     * @summary Tạo permission mới
      * @param {PermissionsApiPermissionsControllerCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PermissionsApiInterface
      */
-    permissionsControllerCreate(requestParameters: PermissionsApiPermissionsControllerCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PermissionResponseDto>;
+    permissionsControllerCreate(requestParameters: PermissionsApiPermissionsControllerCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<Permission>;
+
+    /**
+     * 
+     * @summary Danh sách permission
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApiInterface
+     */
+    permissionsControllerFindAll(options?: RawAxiosRequestConfig): AxiosPromise<Array<Permission>>;
+
+    /**
+     * 
+     * @summary Chi tiết permission
+     * @param {PermissionsApiPermissionsControllerFindOneRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApiInterface
+     */
+    permissionsControllerFindOne(requestParameters: PermissionsApiPermissionsControllerFindOneRequest, options?: RawAxiosRequestConfig): AxiosPromise<Permission>;
+
+    /**
+     * 
+     * @summary Xóa permission
+     * @param {PermissionsApiPermissionsControllerRemoveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApiInterface
+     */
+    permissionsControllerRemove(requestParameters: PermissionsApiPermissionsControllerRemoveRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Cập nhật permission
+     * @param {PermissionsApiPermissionsControllerUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApiInterface
+     */
+    permissionsControllerUpdate(requestParameters: PermissionsApiPermissionsControllerUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<Permission>;
 
 }
 
@@ -150,6 +436,55 @@ export interface PermissionsApiPermissionsControllerCreateRequest {
 }
 
 /**
+ * Request parameters for permissionsControllerFindOne operation in PermissionsApi.
+ * @export
+ * @interface PermissionsApiPermissionsControllerFindOneRequest
+ */
+export interface PermissionsApiPermissionsControllerFindOneRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionsApiPermissionsControllerFindOne
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for permissionsControllerRemove operation in PermissionsApi.
+ * @export
+ * @interface PermissionsApiPermissionsControllerRemoveRequest
+ */
+export interface PermissionsApiPermissionsControllerRemoveRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionsApiPermissionsControllerRemove
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for permissionsControllerUpdate operation in PermissionsApi.
+ * @export
+ * @interface PermissionsApiPermissionsControllerUpdateRequest
+ */
+export interface PermissionsApiPermissionsControllerUpdateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionsApiPermissionsControllerUpdate
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {UpdatePermissionDto}
+     * @memberof PermissionsApiPermissionsControllerUpdate
+     */
+    readonly updatePermissionDto: UpdatePermissionDto
+}
+
+/**
  * PermissionsApi - object-oriented interface
  * @export
  * @class PermissionsApi
@@ -158,7 +493,7 @@ export interface PermissionsApiPermissionsControllerCreateRequest {
 export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
     /**
      * 
-     * @summary Create a new permission
+     * @summary Tạo permission mới
      * @param {PermissionsApiPermissionsControllerCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -166,6 +501,53 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
      */
     public permissionsControllerCreate(requestParameters: PermissionsApiPermissionsControllerCreateRequest, options?: RawAxiosRequestConfig) {
         return PermissionsApiFp(this.configuration).permissionsControllerCreate(requestParameters.createPermissionDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Danh sách permission
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApi
+     */
+    public permissionsControllerFindAll(options?: RawAxiosRequestConfig) {
+        return PermissionsApiFp(this.configuration).permissionsControllerFindAll(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Chi tiết permission
+     * @param {PermissionsApiPermissionsControllerFindOneRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApi
+     */
+    public permissionsControllerFindOne(requestParameters: PermissionsApiPermissionsControllerFindOneRequest, options?: RawAxiosRequestConfig) {
+        return PermissionsApiFp(this.configuration).permissionsControllerFindOne(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Xóa permission
+     * @param {PermissionsApiPermissionsControllerRemoveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApi
+     */
+    public permissionsControllerRemove(requestParameters: PermissionsApiPermissionsControllerRemoveRequest, options?: RawAxiosRequestConfig) {
+        return PermissionsApiFp(this.configuration).permissionsControllerRemove(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Cập nhật permission
+     * @param {PermissionsApiPermissionsControllerUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApi
+     */
+    public permissionsControllerUpdate(requestParameters: PermissionsApiPermissionsControllerUpdateRequest, options?: RawAxiosRequestConfig) {
+        return PermissionsApiFp(this.configuration).permissionsControllerUpdate(requestParameters.id, requestParameters.updatePermissionDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
