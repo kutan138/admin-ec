@@ -11,4 +11,5 @@ export const permissionService = {
   updateById: (id: string, updatePermissionDto: UpdatePermissionDto) =>
     api.permissionsControllerUpdate({ id, updatePermissionDto }),
   removeById: (id: string) => api.permissionsControllerRemove({ id }),
+  getMeta: () => api.permissionsControllerGetMeta(),
 };

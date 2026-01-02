@@ -29,6 +29,7 @@ models/forgot-password-dto.ts
 models/index.ts
 models/login-dto.ts
 models/message-response-dto.ts
+models/permission-meta-response-dto.ts
 models/permission-response-dto.ts
 models/permission.ts
 models/product-image-response-dto.ts

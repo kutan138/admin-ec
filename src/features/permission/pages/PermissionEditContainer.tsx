@@ -22,10 +22,7 @@ const PermissionEditContainer = () => {
   const onSubmit = (values: FormValues) => {
     updateCategory({
       id,
-      data: {
-        name: values.name,
-        description: values.description,
-      },
+      data: values,
     });
   };
 
@@ -42,10 +39,7 @@ const PermissionEditContainer = () => {
 
   useEffect(() => {
     if (data) {
-      form.setFieldsValue({
-        name: data.name,
-        description: data.description,
-      });
+      form.setFieldsValue(data);
     } else {
       form.resetFields();
     }
@@ -57,6 +51,7 @@ const PermissionEditContainer = () => {
       <PermissionForm
         form={form}
         loading={isPending}
+        isDisableSystem={data?.isSystem ?? false}
         onSubmit={onSubmit}
         onDelete={onDelete}
         onCancel={handleCancel}

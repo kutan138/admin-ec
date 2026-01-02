@@ -26,6 +26,8 @@ import type { CreatePermissionDto } from '../models';
 // @ts-ignore
 import type { Permission } from '../models';
 // @ts-ignore
+import type { PermissionMetaResponseDto } from '../models';
+// @ts-ignore
 import type { UpdatePermissionDto } from '../models';
 /**
  * PermissionsApi - axios parameter creator
@@ -119,6 +121,40 @@ export const PermissionsApiAxiosParamCreator = function (configuration?: Configu
             assertParamExists('permissionsControllerFindOne', 'id', id)
             const localVarPath = `/permissions/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication access-token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Dùng để render UI (module, system action, custom action). Không dùng cho auth.
+         * @summary Lấy metadata permission cho frontend
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsControllerGetMeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/permissions/meta`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -276,6 +312,18 @@ export const PermissionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Dùng để render UI (module, system action, custom action). Không dùng cho auth.
+         * @summary Lấy metadata permission cho frontend
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async permissionsControllerGetMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PermissionMetaResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.permissionsControllerGetMeta(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PermissionsApi.permissionsControllerGetMeta']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Xóa permission
          * @param {string} id 
@@ -342,6 +390,15 @@ export const PermissionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.permissionsControllerFindOne(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Dùng để render UI (module, system action, custom action). Không dùng cho auth.
+         * @summary Lấy metadata permission cho frontend
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsControllerGetMeta(options?: RawAxiosRequestConfig): AxiosPromise<PermissionMetaResponseDto> {
+            return localVarFp.permissionsControllerGetMeta(options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Xóa permission
          * @param {PermissionsApiPermissionsControllerRemoveRequest} requestParameters Request parameters.
@@ -398,6 +455,15 @@ export interface PermissionsApiInterface {
      * @memberof PermissionsApiInterface
      */
     permissionsControllerFindOne(requestParameters: PermissionsApiPermissionsControllerFindOneRequest, options?: RawAxiosRequestConfig): AxiosPromise<Permission>;
+
+    /**
+     * Dùng để render UI (module, system action, custom action). Không dùng cho auth.
+     * @summary Lấy metadata permission cho frontend
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApiInterface
+     */
+    permissionsControllerGetMeta(options?: RawAxiosRequestConfig): AxiosPromise<PermissionMetaResponseDto>;
 
     /**
      * 
@@ -524,6 +590,17 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
      */
     public permissionsControllerFindOne(requestParameters: PermissionsApiPermissionsControllerFindOneRequest, options?: RawAxiosRequestConfig) {
         return PermissionsApiFp(this.configuration).permissionsControllerFindOne(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Dùng để render UI (module, system action, custom action). Không dùng cho auth.
+     * @summary Lấy metadata permission cho frontend
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApi
+     */
+    public permissionsControllerGetMeta(options?: RawAxiosRequestConfig) {
+        return PermissionsApiFp(this.configuration).permissionsControllerGetMeta(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

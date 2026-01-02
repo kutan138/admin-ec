@@ -21,11 +21,17 @@
  */
 export interface CreatePermissionDto {
     /**
-     * Permission key (module.action)
+     * Module
      * @type {string}
      * @memberof CreatePermissionDto
      */
-    'name': string;
+    'module': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePermissionDto
+     */
+    'action': CreatePermissionDtoActionEnum;
     /**
      * 
      * @type {string}
@@ -39,4 +45,17 @@ export interface CreatePermissionDto {
      */
     'isSystem'?: boolean;
 }
+
+export const CreatePermissionDtoActionEnum = {
+    Create: 'create',
+    Read: 'read',
+    Update: 'update',
+    Delete: 'delete',
+    Cancel: 'cancel',
+    Publish: 'publish',
+    AssignRole: 'assign.role'
+} as const;
+
+export type CreatePermissionDtoActionEnum = typeof CreatePermissionDtoActionEnum[keyof typeof CreatePermissionDtoActionEnum];
+
 

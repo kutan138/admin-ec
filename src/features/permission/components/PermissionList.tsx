@@ -1,7 +1,7 @@
 import type { Permission } from "@/api/generated";
 import { ActionButtons } from "@/components/common/ActionButtons";
 import type { TableProps } from "antd";
-import { Table, Tag } from "antd";
+import { Space, Table, Tag } from "antd";
 import React from "react";
 
 type Props = {
@@ -17,40 +17,69 @@ const PermissionList: React.FC<Props> = ({
 }) => {
   const columns: TableProps<Permission>["columns"] = [
     {
+      title: "Module",
+      dataIndex: "module",
+      key: "module",
+      sorter: (a, b) => a.module.localeCompare(b.module),
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      filters: [
+        { text: "Read", value: "read" },
+        { text: "Create", value: "create" },
+        { text: "Update", value: "update" },
+        { text: "Delete", value: "delete" },
+      ],
+      onFilter: (value, record) => record.action === value,
+    },
+    {
       title: "Key",
-      dataIndex: "name",
-      key: "name",
-      render: (text) => <a>{text}</a>,
+      dataIndex: "key",
+      render: (_, record) => (
+        <span style={{ fontWeight: "bold" }}>
+          {[record.module, record.action].join(".")}
+        </span>
+      ),
     },
     {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
-      render: (text) => <a>{text}</a>,
+      ellipsis: true,
     },
     {
-      title: "Kích hoạt",
-      dataIndex: "isActive",
-      key: "isActive",
-      render: (_, { isSystem }) => (
-        <Tag color={isSystem ? "geekblue" : "green"}>
-          {isSystem ? "Hệ thống" : "Default"}
+      title: "Loại",
+      dataIndex: "isSystem",
+      key: "isSystem",
+      render: (isSystem) => (
+        <Tag color={isSystem ? "geekblue" : "default"}>
+          {isSystem ? "Hệ thống" : "Custom"}
         </Tag>
       ),
+      filters: [
+        { text: "Hệ thống", value: true },
+        { text: "Custom", value: false },
+      ],
+      onFilter: (value, record) => record.isSystem === value,
     },
     {
-      title: "Action",
+      title: "Thao tác",
       key: "action",
+      width: 120,
       render: (_, record) => (
-        <ActionButtons
-          onEdit={() => {
-            onClickEdit(record.id);
-          }}
-          onDelete={() => handleDelete(record.id)}
-        />
+        <Space>
+          <ActionButtons
+            onEdit={() => onClickEdit(record.id)}
+            onDelete={() => handleDelete(record.id)}
+            disableDelete={record.isSystem}
+          />
+        </Space>
       ),
     },
   ];
+
   return <Table<Permission> columns={columns} dataSource={data} />;
 };
 

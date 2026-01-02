@@ -11,11 +11,7 @@ const CategoryAddContainer = () => {
   const [form] = Form.useForm<FormValues>();
 
   const onSubmit = (values: FormValues) => {
-    addPermission({
-      name: values.name,
-      description: values.description,
-    });
-
+    addPermission(values);
     form.resetFields();
   };
 
@@ -28,6 +24,7 @@ const CategoryAddContainer = () => {
       <BaseHeading title="Thêm mới quyền hạn" />
       <PermissionForm
         form={form}
+        isDisableSystem={false}
         loading={isPending}
         onSubmit={onSubmit}
         onCancel={handleCancel}

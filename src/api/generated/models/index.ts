@@ -13,6 +13,7 @@ export * from './forgot-password-dto';
 export * from './login-dto';
 export * from './message-response-dto';
 export * from './permission';
+export * from './permission-meta-response-dto';
 export * from './permission-response-dto';
 export * from './product-image-response-dto';
 export * from './product-response-dto';

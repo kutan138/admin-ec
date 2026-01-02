@@ -1,15 +1,14 @@
 // columns/actionColumn.tsx
-import { Space, Popconfirm, Tooltip } from "antd";
+import { Space, Popconfirm, Tooltip, Button } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 export type ActionButtonsProps = {
-  onEdit?: () => void;
-  onDelete?: () => void;
-
   showEdit?: boolean;
   showDelete?: boolean;
-
+  disableDelete?: boolean;
   loadingDelete?: boolean;
+  onEdit?: () => void;
+  onDelete?: () => void;
 };
 
 export const ActionButtons = ({
@@ -18,14 +17,15 @@ export const ActionButtons = ({
   showEdit = true,
   showDelete = true,
   loadingDelete = false,
+  disableDelete,
 }: ActionButtonsProps) => {
   return (
     <Space size="middle">
       {showEdit && onEdit && (
         <Tooltip title="Chỉnh sửa">
-          <EditOutlined
-            style={{ color: "#1677ff", cursor: "pointer" }}
+          <Button
             onClick={onEdit}
+            icon={<EditOutlined style={{ fontSize: 18 }} />}
           />
         </Tooltip>
       )}
@@ -38,9 +38,12 @@ export const ActionButtons = ({
           onConfirm={onDelete}
         >
           <Tooltip title="Xóa">
-            <DeleteOutlined
-              style={{ color: "#ff4d4f", cursor: "pointer" }}
-              spin={loadingDelete}
+            <Button
+              disabled={disableDelete}
+              loading={loadingDelete}
+              icon={
+                <DeleteOutlined style={{ fontSize: 18 }} spin={loadingDelete} />
+              }
             />
           </Tooltip>
         </Popconfirm>

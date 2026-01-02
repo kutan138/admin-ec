@@ -27,12 +27,6 @@ export interface PermissionResponseDto {
      */
     'id': string;
     /**
-     * Permission name
-     * @type {string}
-     * @memberof PermissionResponseDto
-     */
-    'name': string;
-    /**
      * Permission description
      * @type {string}
      * @memberof PermissionResponseDto
