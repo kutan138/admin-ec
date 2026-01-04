@@ -20,7 +20,7 @@ export const ActionButtons = ({
   disableDelete,
 }: ActionButtonsProps) => {
   return (
-    <Space size="middle">
+    <Space>
       {showEdit && onEdit && (
         <Tooltip title="Chỉnh sửa">
           <Button

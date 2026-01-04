@@ -13,6 +13,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedCategoryRouteRouteImport } from './routes/_authenticated/category/route'
+import { Route as AuthenticatedRoleIndexRouteImport } from './routes/_authenticated/role/index'
 import { Route as AuthenticatedPermissionIndexRouteImport } from './routes/_authenticated/permission/index'
 import { Route as AuthenticatedCategoryIndexRouteImport } from './routes/_authenticated/category/index'
 import { Route as AuthenticatedPermissionAddRouteImport } from './routes/_authenticated/permission/add'
@@ -40,6 +41,11 @@ const AuthenticatedCategoryRouteRoute =
     path: '/category',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedRoleIndexRoute = AuthenticatedRoleIndexRouteImport.update({
+  id: '/role/',
+  path: '/role/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedPermissionIndexRoute =
   AuthenticatedPermissionIndexRouteImport.update({
     id: '/permission/',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/permission/add': typeof AuthenticatedPermissionAddRoute
   '/category/': typeof AuthenticatedCategoryIndexRoute
   '/permission': typeof AuthenticatedPermissionIndexRoute
+  '/role': typeof AuthenticatedRoleIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/permission/add': typeof AuthenticatedPermissionAddRoute
   '/category': typeof AuthenticatedCategoryIndexRoute
   '/permission': typeof AuthenticatedPermissionIndexRoute
+  '/role': typeof AuthenticatedRoleIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/_authenticated/permission/add': typeof AuthenticatedPermissionAddRoute
   '/_authenticated/category/': typeof AuthenticatedCategoryIndexRoute
   '/_authenticated/permission/': typeof AuthenticatedPermissionIndexRoute
+  '/_authenticated/role/': typeof AuthenticatedRoleIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -122,6 +131,7 @@ export interface FileRouteTypes {
     | '/permission/add'
     | '/category/'
     | '/permission'
+    | '/role'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/permission/add'
     | '/category'
     | '/permission'
+    | '/role'
   id:
     | '__root__'
     | '/_authenticated'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/_authenticated/permission/add'
     | '/_authenticated/category/'
     | '/_authenticated/permission/'
+    | '/_authenticated/role/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -179,6 +191,13 @@ declare module '@tanstack/react-router' {
       path: '/category'
       fullPath: '/category'
       preLoaderRoute: typeof AuthenticatedCategoryRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/role/': {
+      id: '/_authenticated/role/'
+      path: '/role'
+      fullPath: '/role'
+      preLoaderRoute: typeof AuthenticatedRoleIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/permission/': {
@@ -250,6 +269,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPermissionIdRoute: typeof AuthenticatedPermissionIdRoute
   AuthenticatedPermissionAddRoute: typeof AuthenticatedPermissionAddRoute
   AuthenticatedPermissionIndexRoute: typeof AuthenticatedPermissionIndexRoute
+  AuthenticatedRoleIndexRoute: typeof AuthenticatedRoleIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -258,6 +278,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPermissionIdRoute: AuthenticatedPermissionIdRoute,
   AuthenticatedPermissionAddRoute: AuthenticatedPermissionAddRoute,
   AuthenticatedPermissionIndexRoute: AuthenticatedPermissionIndexRoute,
+  AuthenticatedRoleIndexRoute: AuthenticatedRoleIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

@@ -26,6 +26,12 @@ const SideBar = () => {
       match: APP_ROUTES.category.match,
     },
     {
+      key: APP_ROUTES.role.to,
+      icon: FileProtectOutlined,
+      label: "Vai trò",
+      match: APP_ROUTES.role.match,
+    },
+    {
       key: APP_ROUTES.permission.to,
       icon: FileProtectOutlined,
       label: "Quyền",

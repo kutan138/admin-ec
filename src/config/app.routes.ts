@@ -40,4 +40,9 @@ export const APP_ROUTES = {
     key: "category-add",
     to: "/category/add",
   },
+  role: {
+    key: "role",
+    to: "/role",
+    match: (p) => p.startsWith("/role"),
+  },
 } satisfies Record<string, AppRoute>;

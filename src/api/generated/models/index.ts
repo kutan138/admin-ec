@@ -1,5 +1,6 @@
 export * from './active-dto';
 export * from './add-cart-item-dto';
+export * from './assign-permissions-dto';
 export * from './cart-item-response-dto';
 export * from './cart-response-dto';
 export * from './category-response-dto';
@@ -27,5 +28,6 @@ export * from './update-cart-item-quantity-dto';
 export * from './update-category-dto';
 export * from './update-permission-dto';
 export * from './update-product-dto';
+export * from './update-role-dto';
 export * from './user-profile-dto';
 export * from './user-response-dto';

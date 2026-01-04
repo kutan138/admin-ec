@@ -16,6 +16,7 @@ git_push.sh
 index.ts
 models/active-dto.ts
 models/add-cart-item-dto.ts
+models/assign-permissions-dto.ts
 models/cart-item-response-dto.ts
 models/cart-response-dto.ts
 models/category-response-dto.ts
@@ -44,6 +45,7 @@ models/update-cart-item-quantity-dto.ts
 models/update-category-dto.ts
 models/update-permission-dto.ts
 models/update-product-dto.ts
+models/update-role-dto.ts
 models/user-profile-dto.ts
 models/user-response-dto.ts
 package.json

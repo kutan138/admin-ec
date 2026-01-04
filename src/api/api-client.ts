@@ -4,6 +4,7 @@ import {
   CategoriesApi,
   UsersApi,
   PermissionsApi,
+  RolesApi,
 } from "./generated/api";
 import { axiosInstance } from "./axios-instance";
 import { axiosRefreshInstance } from "./axios-refresh-instance";
@@ -18,6 +19,7 @@ const apiConfig = new Configuration({
 // Export API instances với axios custom
 export const authApi = new AuthApi(apiConfig, undefined, axiosInstance);
 export const usersApi = new UsersApi(apiConfig, undefined, axiosInstance);
+export const roleApi = new RolesApi(apiConfig, undefined, axiosInstance);
 export const permissionApi = new PermissionsApi(
   apiConfig,
   undefined,
@@ -41,6 +43,7 @@ export const apiClient = {
   auth: authApi,
   users: usersApi,
   categories: categoriesApi,
+  role: roleApi,
   permission: permissionApi,
   refreshAuthApi,
 };

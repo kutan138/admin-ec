@@ -22,15 +22,63 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AssignPermissionsDto } from '../models';
+// @ts-ignore
 import type { CreateRoleDto } from '../models';
 // @ts-ignore
 import type { RoleResponseDto } from '../models';
+// @ts-ignore
+import type { UpdateRoleDto } from '../models';
 /**
  * RolesApi - axios parameter creator
  * @export
  */
 export const RolesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Gán permission cho role
+         * @param {string} id 
+         * @param {AssignPermissionsDto} assignPermissionsDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesControllerAssignPermissions: async (id: string, assignPermissionsDto: AssignPermissionsDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('rolesControllerAssignPermissions', 'id', id)
+            // verify required parameter 'assignPermissionsDto' is not null or undefined
+            assertParamExists('rolesControllerAssignPermissions', 'assignPermissionsDto', assignPermissionsDto)
+            const localVarPath = `/roles/{id}/permissions`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication access-token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(assignPermissionsDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Create or update a role with permissions
@@ -71,6 +119,160 @@ export const RolesApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Danh sách role
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesControllerFindAll: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/roles`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication access-token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Chi tiết role
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesControllerFindOne: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('rolesControllerFindOne', 'id', id)
+            const localVarPath = `/roles/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication access-token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Xoá role (không áp dụng cho ADMIN)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesControllerRemove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('rolesControllerRemove', 'id', id)
+            const localVarPath = `/roles/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication access-token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Cập nhật role
+         * @param {string} id 
+         * @param {UpdateRoleDto} updateRoleDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesControllerUpdate: async (id: string, updateRoleDto: UpdateRoleDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('rolesControllerUpdate', 'id', id)
+            // verify required parameter 'updateRoleDto' is not null or undefined
+            assertParamExists('rolesControllerUpdate', 'updateRoleDto', updateRoleDto)
+            const localVarPath = `/roles/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication access-token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateRoleDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -83,6 +285,20 @@ export const RolesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Gán permission cho role
+         * @param {string} id 
+         * @param {AssignPermissionsDto} assignPermissionsDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rolesControllerAssignPermissions(id: string, assignPermissionsDto: AssignPermissionsDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rolesControllerAssignPermissions(id, assignPermissionsDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RolesApi.rolesControllerAssignPermissions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Create or update a role with permissions
          * @param {CreateRoleDto} createRoleDto 
          * @param {*} [options] Override http request option.
@@ -92,6 +308,58 @@ export const RolesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.rolesControllerCreateRole(createRoleDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RolesApi.rolesControllerCreateRole']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Danh sách role
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rolesControllerFindAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleResponseDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rolesControllerFindAll(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RolesApi.rolesControllerFindAll']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Chi tiết role
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rolesControllerFindOne(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rolesControllerFindOne(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RolesApi.rolesControllerFindOne']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Xoá role (không áp dụng cho ADMIN)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rolesControllerRemove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rolesControllerRemove(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RolesApi.rolesControllerRemove']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Cập nhật role
+         * @param {string} id 
+         * @param {UpdateRoleDto} updateRoleDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rolesControllerUpdate(id: string, updateRoleDto: UpdateRoleDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rolesControllerUpdate(id, updateRoleDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RolesApi.rolesControllerUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -106,6 +374,16 @@ export const RolesApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
+         * @summary Gán permission cho role
+         * @param {RolesApiRolesControllerAssignPermissionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesControllerAssignPermissions(requestParameters: RolesApiRolesControllerAssignPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoleResponseDto> {
+            return localVarFp.rolesControllerAssignPermissions(requestParameters.id, requestParameters.assignPermissionsDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Create or update a role with permissions
          * @param {RolesApiRolesControllerCreateRoleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -113,6 +391,45 @@ export const RolesApiFactory = function (configuration?: Configuration, basePath
          */
         rolesControllerCreateRole(requestParameters: RolesApiRolesControllerCreateRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoleResponseDto> {
             return localVarFp.rolesControllerCreateRole(requestParameters.createRoleDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Danh sách role
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesControllerFindAll(options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleResponseDto>> {
+            return localVarFp.rolesControllerFindAll(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Chi tiết role
+         * @param {RolesApiRolesControllerFindOneRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesControllerFindOne(requestParameters: RolesApiRolesControllerFindOneRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoleResponseDto> {
+            return localVarFp.rolesControllerFindOne(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Xoá role (không áp dụng cho ADMIN)
+         * @param {RolesApiRolesControllerRemoveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesControllerRemove(requestParameters: RolesApiRolesControllerRemoveRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.rolesControllerRemove(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Cập nhật role
+         * @param {RolesApiRolesControllerUpdateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesControllerUpdate(requestParameters: RolesApiRolesControllerUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoleResponseDto> {
+            return localVarFp.rolesControllerUpdate(requestParameters.id, requestParameters.updateRoleDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -125,6 +442,16 @@ export const RolesApiFactory = function (configuration?: Configuration, basePath
 export interface RolesApiInterface {
     /**
      * 
+     * @summary Gán permission cho role
+     * @param {RolesApiRolesControllerAssignPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RolesApiInterface
+     */
+    rolesControllerAssignPermissions(requestParameters: RolesApiRolesControllerAssignPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoleResponseDto>;
+
+    /**
+     * 
      * @summary Create or update a role with permissions
      * @param {RolesApiRolesControllerCreateRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -133,6 +460,66 @@ export interface RolesApiInterface {
      */
     rolesControllerCreateRole(requestParameters: RolesApiRolesControllerCreateRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoleResponseDto>;
 
+    /**
+     * 
+     * @summary Danh sách role
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RolesApiInterface
+     */
+    rolesControllerFindAll(options?: RawAxiosRequestConfig): AxiosPromise<Array<RoleResponseDto>>;
+
+    /**
+     * 
+     * @summary Chi tiết role
+     * @param {RolesApiRolesControllerFindOneRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RolesApiInterface
+     */
+    rolesControllerFindOne(requestParameters: RolesApiRolesControllerFindOneRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoleResponseDto>;
+
+    /**
+     * 
+     * @summary Xoá role (không áp dụng cho ADMIN)
+     * @param {RolesApiRolesControllerRemoveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RolesApiInterface
+     */
+    rolesControllerRemove(requestParameters: RolesApiRolesControllerRemoveRequest, options?: RawAxiosRequestConfig): AxiosPromise<any>;
+
+    /**
+     * 
+     * @summary Cập nhật role
+     * @param {RolesApiRolesControllerUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RolesApiInterface
+     */
+    rolesControllerUpdate(requestParameters: RolesApiRolesControllerUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoleResponseDto>;
+
+}
+
+/**
+ * Request parameters for rolesControllerAssignPermissions operation in RolesApi.
+ * @export
+ * @interface RolesApiRolesControllerAssignPermissionsRequest
+ */
+export interface RolesApiRolesControllerAssignPermissionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RolesApiRolesControllerAssignPermissions
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {AssignPermissionsDto}
+     * @memberof RolesApiRolesControllerAssignPermissions
+     */
+    readonly assignPermissionsDto: AssignPermissionsDto
 }
 
 /**
@@ -150,12 +537,73 @@ export interface RolesApiRolesControllerCreateRoleRequest {
 }
 
 /**
+ * Request parameters for rolesControllerFindOne operation in RolesApi.
+ * @export
+ * @interface RolesApiRolesControllerFindOneRequest
+ */
+export interface RolesApiRolesControllerFindOneRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RolesApiRolesControllerFindOne
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for rolesControllerRemove operation in RolesApi.
+ * @export
+ * @interface RolesApiRolesControllerRemoveRequest
+ */
+export interface RolesApiRolesControllerRemoveRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RolesApiRolesControllerRemove
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for rolesControllerUpdate operation in RolesApi.
+ * @export
+ * @interface RolesApiRolesControllerUpdateRequest
+ */
+export interface RolesApiRolesControllerUpdateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RolesApiRolesControllerUpdate
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {UpdateRoleDto}
+     * @memberof RolesApiRolesControllerUpdate
+     */
+    readonly updateRoleDto: UpdateRoleDto
+}
+
+/**
  * RolesApi - object-oriented interface
  * @export
  * @class RolesApi
  * @extends {BaseAPI}
  */
 export class RolesApi extends BaseAPI implements RolesApiInterface {
+    /**
+     * 
+     * @summary Gán permission cho role
+     * @param {RolesApiRolesControllerAssignPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RolesApi
+     */
+    public rolesControllerAssignPermissions(requestParameters: RolesApiRolesControllerAssignPermissionsRequest, options?: RawAxiosRequestConfig) {
+        return RolesApiFp(this.configuration).rolesControllerAssignPermissions(requestParameters.id, requestParameters.assignPermissionsDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Create or update a role with permissions
@@ -166,6 +614,53 @@ export class RolesApi extends BaseAPI implements RolesApiInterface {
      */
     public rolesControllerCreateRole(requestParameters: RolesApiRolesControllerCreateRoleRequest, options?: RawAxiosRequestConfig) {
         return RolesApiFp(this.configuration).rolesControllerCreateRole(requestParameters.createRoleDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Danh sách role
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RolesApi
+     */
+    public rolesControllerFindAll(options?: RawAxiosRequestConfig) {
+        return RolesApiFp(this.configuration).rolesControllerFindAll(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Chi tiết role
+     * @param {RolesApiRolesControllerFindOneRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RolesApi
+     */
+    public rolesControllerFindOne(requestParameters: RolesApiRolesControllerFindOneRequest, options?: RawAxiosRequestConfig) {
+        return RolesApiFp(this.configuration).rolesControllerFindOne(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Xoá role (không áp dụng cho ADMIN)
+     * @param {RolesApiRolesControllerRemoveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RolesApi
+     */
+    public rolesControllerRemove(requestParameters: RolesApiRolesControllerRemoveRequest, options?: RawAxiosRequestConfig) {
+        return RolesApiFp(this.configuration).rolesControllerRemove(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Cập nhật role
+     * @param {RolesApiRolesControllerUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RolesApi
+     */
+    public rolesControllerUpdate(requestParameters: RolesApiRolesControllerUpdateRequest, options?: RawAxiosRequestConfig) {
+        return RolesApiFp(this.configuration).rolesControllerUpdate(requestParameters.id, requestParameters.updateRoleDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
