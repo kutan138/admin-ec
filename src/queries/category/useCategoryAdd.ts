@@ -1,10 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
-import { message } from "antd";
-import { useNavigate } from "@tanstack/react-router";
-import { queryClient } from "@/lib/react-query/queryClient";
 import { categoryService } from "@/api/services/category.service";
+import { APP_ROUTES } from "@/config/app.routes";
+import { queryClient } from "@/lib/react-query/queryClient";
 import { categoryKeys } from "@/queries/category/category.keys";
-import { Route as CategoryRoute } from "@/routes/_authenticated/category/route";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { message } from "antd";
 
 export const useCategoryAdd = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export const useCategoryAdd = () => {
       });
 
       navigate({
-        to: CategoryRoute.id,
+        to: APP_ROUTES.category.to,
       });
     },
 

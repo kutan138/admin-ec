@@ -4,7 +4,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { queryClient } from "@/lib/react-query/queryClient";
 import { categoryService } from "@/api/services/category.service";
 import { categoryKeys } from "@/queries/category/category.keys";
-import { Route as CategoryAddRoute } from "@/routes/_authenticated/category/add";
+import { APP_ROUTES } from "@/config/app.routes";
 
 export const useCategoryDelete = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export const useCategoryDelete = () => {
       });
 
       // 👉 Quay về danh sách category
-      navigate({ to: CategoryAddRoute.id });
+      navigate({ to: APP_ROUTES.category.to });
     },
 
     onError: () => {
